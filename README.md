@@ -1,3 +1,8 @@
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+---
+
 # Online Courses Marketplace App
 
 Aplikacja typu marketplace dedykowana do zarządzania, publikowania oraz uczestnictwa w kursach online. System opiera się na dostępie opartym o role (RBAC), oferując dedykowane funkcjonalności dla kursantów, twórców oraz administracji.
