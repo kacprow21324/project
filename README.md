@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Online Courses Marketplace App
 
-## Getting Started
+Aplikacja typu marketplace dedykowana do zarządzania, publikowania oraz uczestnictwa w kursach online. System opiera się na dostępie opartym o role (RBAC), oferując dedykowane funkcjonalności dla kursantów, twórców oraz administracji.
 
-First, run the development server:
+## Uwierzytelnianie
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Aplikacja zawiera kompletny moduł autoryzacji z płynną nawigacją między widokami:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Rejestracja:** Tworzenie nowego konta z podaniem nazwy użytkownika (username), adresu e-mail, hasła oraz przypisaniem odpowiedniej roli w systemie.
+* **Logowanie:** Dostęp do platformy autoryzowany za pomocą adresu e-mail oraz hasła.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Funkcjonalności według ról
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+System obsługuje trzy niezależne typy kont, z których każde posiada inne uprawnienia i możliwości.
 
-## Learn More
+### 1. Użytkownik (User)
+Rola przeznaczona dla osób uczących się, poszukujących i realizujących kursy na platformie.
 
-To learn more about Next.js, take a look at the following resources:
+* Przeglądanie dostępnej listy kursów online.
+* Filtrowanie wyników wyszukiwania według kategorii, poziomu zaawansowania oraz ceny.
+* Wyświetlanie szczegółowych informacji o konkretnym kursie.
+* Zapisywanie się na wybrane szkolenia.
+* Dostęp do panelu z listą kursów, na które użytkownik jest aktualnie zapisany.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Instruktor (Instructor)
+Rola dedykowana twórcom treści i nauczycielom.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* Tworzenie, edycja oraz usuwanie własnych kursów.
+* Budowanie struktury kursu poprzez dodawanie lekcji (obsługa materiałów wideo oraz treści tekstowych).
+* Przeglądanie listy użytkowników zapisanych na prowadzone przez siebie kursy.
 
-## Deploy on Vercel
+### 3. Administrator (Admin)
+Rola nadzorująca działanie całej platformy.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Globalne zarządzanie kontami wszystkich użytkowników.
+* Zarządzanie kursami oraz moderacja publikowanych treści.
+* Dostęp do pełnej historii zapisów i statystyk w systemie.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Hosting
+
+Aplikacja jest hostowana na **Vercel**:
+**[Link](tu_będzie_link_xd)**
+
+## Autorzy
+*
+*
+*
