@@ -8,6 +8,7 @@ export default function RegisterForm() {
 
   const onSubmit = (data: RegisterFormData) => {
     console.log('Register Form Data:', data);
+    console.log('auth/registerform');
   };
 
   return (

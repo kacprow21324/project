@@ -18,10 +18,21 @@ export default function RegisterPage() {
       password,
     });
 
-    if (error) {
+    if (error) { // przy tworzeniu konta
       setError(error.message);
-      console.log(error)
-    } else if (data.user) {
+      console.log(error);
+      return;
+    }
+    
+    // dodanie roli do tabeli 'users' (1=user, 2=instructor, 3=admin)
+    const {error: roleError} = await supabase.from('users').insert({UID:data.user?.id, role_id: 1})
+    if(roleError){
+      setError(roleError.message)
+      console.log(roleError);
+      return;
+    }
+    
+    else if (data.user) {
       setSuccess('Konto utworzone. Możesz się teraz zalogować.');
       router.push('/login');
     }

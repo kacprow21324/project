@@ -8,6 +8,7 @@ export default function LoginForm() {
 
   const onSubmit = (data: LoginFormData) => {
     console.log('Login Form Data:', data);
+    console.log('auth/loginform');
   };
 
   return (

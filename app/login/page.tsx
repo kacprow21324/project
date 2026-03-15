@@ -10,10 +10,12 @@ export default function Login() {
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
+    console.log('testttt')
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setError(error.message);
     } else {
+      console.log('push na dashboard')
       router.push('/dashboard');
     }
   };
