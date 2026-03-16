@@ -1,0 +1,4 @@
+in .env.local:
+
+NEXT_PUBLIC_SUPABASE_URL=https://pktvvlmwvhgswzerknai.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=sb_publishable_hXH1A9A8NZe31uZLT7iqOQ_XtGYNR6u
