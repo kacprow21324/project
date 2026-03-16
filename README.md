@@ -46,7 +46,7 @@ Rola nadzorująca działanie całej platformy.
 ## Hosting
 
 Aplikacja jest hostowana na **Vercel**:
-**[Link](tu_będzie_link_xd)**
+**[Link](https://project-peach-eta.vercel.app/)**
 
 ## Autorzy
 *
