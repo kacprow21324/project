@@ -1,0 +1,23 @@
+TODO:
+
+Ana sayfa: Kursların listelendiği bir ana sayfanın yapılması.
+
+Kurs detayları: Kurs verilerinin/bilgilerinin ekranda görüntülenmesi.
+
+Kurs materyalleri: Kursların içinde .txt vb. dosyalar gibi eğitim materyalleri bulunmalı.
+
+Kurs oluşturma sayfası: Kurs yaratmak için bir alt sayfa (isim, kategori seçme vb. özellikler olmalı).
+
+Kurs alt sayfası ve ders ekleme: Belirli bir kursun sayfasına video, .pdf, .txt dosyaları ve o dersin ne hakkında olduğuna dair bir açıklama içeren dersler ekleyebilme özelliği.
+
+Eğitmen paneli: Eğitmenlerin hangi kullanıcıların kurslarına kayıtlı olduğunu görebileceği bir panel.
+
+Admin paneli: Kursları ve kullanıcıları yönetmek (örn. silme işlemleri) için yönetici paneli.
+
+Filtreleme ve arama: Kursları isme, tarihe, kategoriye, zorluk seviyesine ve fiyata göre filtreleyebilecek bir arama bölümü.
+
+Kullanıcı kayıt ve profili: Her bir kullanıcının belirli bir kursa kayıt olabilmesi ve o kullanıcının hangi kurslara kayıtlı olduğunu görebileceğimiz bir kullanıcı sayfası.
+
+Kullanıcı paneli: Moodle tarzı, kayıtlı olunan kursların listelendiği bir yan menü (sidebar) içeren kullanıcı paneli.
+
+Tasarım (CSS): CSS işlemleri en sona bırakılacak. 

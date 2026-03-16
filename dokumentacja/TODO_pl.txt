@@ -1,0 +1,14 @@
+TODO:
+- zrobienie strony głównej z kursami
+- wyświetlanie danych kursów
+- kursach powinny znaleźć się materiały typu jakieś pliki .txt itd.
+- podstrona do tworzenia kursów typu dać wybór nazwy, kategorii
+- podstrona do danego kursu, możliwość dodawania lekcji w których są pliki wideo, .pdf, .txt, jakiś opis czego dotyczy dana lekcja.
+- panel instruktora w którym może zobaczyć jacy użytkownicy są zapisani
+- admin: panel do zarządzania kursami i użytkownikami tzn. usuwanie
+- filtrowanie kursów jakaś wyszukiwarka, np. po nazwie, dacie, kategorii, poziom, cena
+- poszczególny użytkownik może zapisać się na konkretny kurs, i jakaś strona od użytkownika typu możemy zobaczyć na czym dany użytkownik jest zapisany.
+- panel użytkownika np. boczny z listami zapisanych kursów coś ala moodle.
+- css dopiero na samym końcu.
+
+
