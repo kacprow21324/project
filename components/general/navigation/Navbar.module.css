@@ -46,3 +46,47 @@
     color: var(--navbar-text-hover);
     border-color: var(--navbar-text-hover);
 }
+
+.registerButton{
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.3rem;
+    border: 2px solid var(--navbar-text-hover);
+    background-color: var(--navbar-text-hover);
+    color: var(--navbar-color);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.registerButton:hover{
+    background-color: transparent;
+    color: var(--navbar-text-hover);
+}
+
+.userInfo{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 0.5rem;
+}
+
+.userInfo span{
+    color: var(--navbar-text-hover);
+    font-weight: 500;
+}
+
+.logoutButton{
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.3rem;
+    border: 2px solid var(--navbar-text-hover);
+    background-color: transparent;
+    color: var(--navbar-text-hover);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover{
+    background-color: var(--navbar-text-hover);
+    color: var(--navbar-color);
+}
