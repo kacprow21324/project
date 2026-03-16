@@ -1,5 +1,7 @@
+import Navbar from "@/components/general/navigation/Navbar";
 import type { Metadata } from "next";
 import Link from "next/link";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Marketplace Kursów Online",
@@ -14,18 +16,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body>
-        <header>
-          <nav>
-            <ul>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li>
-                <Link href="/auth">Auth</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <Navbar/>
 
         <main>{children}</main>
 

@@ -1,0 +1,92 @@
+.headerBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    background-color: var(--navbar-color);
+}
+
+.siteName{
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'source sans pro', 'arial', 'sans serif';
+    color: var(--navbar-text-hover);
+    margin-left: 1rem;
+}
+
+.siteName:hover{
+    color: var(--navbar-text);
+}
+
+.navLinks{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.2rem;
+    font-family: 'source sans pro', 'arial', 'sans serif';
+    font-size: 1.1rem;
+    color: var(--navbar-text);
+    margin-right: 1rem;
+}
+
+.navLink:hover{
+    color: var(--navbar-text-hover);
+}
+
+.loginButton{
+    padding: 0.2rem;
+    padding-left: 0.4rem;
+    padding-right: 0.5rem;
+    border-radius: 0.3rem;
+    border: 2px solid var(--background-color);
+    cursor: pointer;
+}
+
+.loginButton:hover{
+    color: var(--navbar-text-hover);
+    border-color: var(--navbar-text-hover);
+}
+
+.registerButton{
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.3rem;
+    border: 2px solid var(--navbar-text-hover);
+    background-color: var(--navbar-text-hover);
+    color: var(--navbar-color);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.registerButton:hover{
+    background-color: transparent;
+    color: var(--navbar-text-hover);
+}
+
+.userInfo{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 0.5rem;
+}
+
+.userInfo span{
+    color: var(--navbar-text-hover);
+    font-weight: 500;
+}
+
+.logoutButton{
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.3rem;
+    border: 2px solid var(--navbar-text-hover);
+    background-color: transparent;
+    color: var(--navbar-text-hover);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover{
+    background-color: var(--navbar-text-hover);
+    color: var(--navbar-color);
+}

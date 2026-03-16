@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+:root{
+    --background-color: #eee;
+    --background-color-2: #fff;
+
+    --navbar-color: oklch(20.8% 0.042 265.755);
+    --navbar-text: #fff;
+    --navbar-text-hover: oklch(67.3% 0.182 276.935);
+
+    --main-font: 'arial';
+    --main-text-color: oklch(20.8% 0.042 265.755);
+    --main-text-hover: oklch(37.2% 0.044 257.287)
+}
+
+body{
+    margin: 0 0 0;
+    background-color: var(--background-color);
+}
+
+main{
+    margin: 2rem;
+}
+
+.welcomeCard{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--background-color-2);
+    border-radius: 0.5rem;
+    margin: 4rem;
+}
+
+/* temp */
+input{
+    border: 2px solid #bbb;
+}
