@@ -1,9 +1,14 @@
-import React from 'react'
+'use client';
 
-function DashboardPage() {
+import { InstructorDashboard } from '@/components/InstructorDashboard';
+import { mockCourse } from '@/types/coursesMockData';
+
+export default function DashboardPage() {
+  const mockCourses = [mockCourse];
+
   return (
-    <div>DashboardPage</div>
-  )
+    <div>
+      <InstructorDashboard courses={mockCourses} />
+    </div>
+  );
 }
-
-export default DashboardPage

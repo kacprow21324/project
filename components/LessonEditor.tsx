@@ -2,6 +2,7 @@
 
 import { useReducer, useState } from 'react';
 import type { Lesson, ContentBlock } from '@/types/courses';
+import { ContentBlockRenderer } from './ContentBlockRenderer';
 
 export type LessonAction =
   | {
@@ -263,29 +264,7 @@ export const LessonEditor = ({ lesson, onLessonUpdate }: LessonEditorProps) => {
               {state.contentBlocks.map((block, index) => (
                 <li key={index}>
                   <div>
-                    <strong>Type:</strong> {block.type}
-                    {block.type === 'video' && (
-                      <div>
-                        <strong>URL:</strong> <a href={block.url}>{block.url}</a>
-                      </div>
-                    )}
-                    {block.type === 'text' && (
-                      <div>
-                        <strong>Content:</strong> {block.body}
-                      </div>
-                    )}
-                    {block.type === 'file' && (
-                      <div>
-                        <strong>Name:</strong> {block.name}
-                        <br />
-                        <strong>URL:</strong> <a href={block.url}>{block.url}</a>
-                      </div>
-                    )}
-                    {block.type === 'assignment' && (
-                      <div>
-                        <strong>Instructions:</strong> {block.instruction}
-                      </div>
-                    )}
+                    <ContentBlockRenderer block={block} />
                   </div>
                   <button onClick={() => {
                     handleRemoveBlock(index);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import type { Course, Section } from '@/types/courses';
 import { SectionList } from './SectionList';
 
@@ -114,10 +114,17 @@ const courseReducer = (state: Course, action: CourseAction): Course => {
 
 interface CourseBuilderProps {
   initialCourse: Course;
+  onCourseUpdate?: (course: Course) => void;
 }
 
-export const CourseBuilder = ({ initialCourse }: CourseBuilderProps) => {
+export const CourseBuilder = ({ initialCourse, onCourseUpdate }: CourseBuilderProps) => {
   const [course, dispatch] = useReducer(courseReducer, initialCourse);
+
+  useEffect(() => {
+    if (onCourseUpdate) {
+      onCourseUpdate(course);
+    }
+  }, [course, onCourseUpdate]);
 
   const updateCourseInfo = (field: 'title' | 'desc', value: string) => {
     dispatch({
