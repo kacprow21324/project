@@ -17,7 +17,6 @@ export default function RegisterForm() {
     setLoading(true);
 
     try {
-      // Rejestracja w auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
@@ -29,12 +28,11 @@ export default function RegisterForm() {
         return;
       }
 
-      // Dodaj użytkownika do tabeli users
       const { error: userError } = await supabase
         .from('users')
         .insert({
           UID: authData.user?.id,
-          role_id: data.role === 'Instructor' ? 2 : 1, // 1=User, 2=Instructor
+          role_id: data.role === 'Instructor' ? 2 : 1,
         });
 
       if (userError) {
@@ -43,7 +41,6 @@ export default function RegisterForm() {
         return;
       }
 
-      // Sukces - przekieruj na login
       router.push('/login?registered=true');
     } catch (err: any) {
       setServerError(err.message || 'Coś poszło nie tak');

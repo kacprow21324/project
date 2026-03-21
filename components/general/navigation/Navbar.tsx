@@ -27,7 +27,6 @@ export default function Navbar() {
 
     checkSession()
 
-    // Nasluchuj zmian autentykacji
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUser(session.user)
@@ -51,12 +50,10 @@ export default function Navbar() {
     <header className={`${classes.headerBar} shadow-lg`}>
         <div className={classes.siteName}><Link href="/">Marketplace Kursów Online</Link></div>
         <div className={classes.navLinks}>
-            {/* Wszyscy */}
             <Link href="/courses" className={classes.navLink}>Przeglądaj</Link>
-            
+
             {user ? (
               <>
-                {/* Zalogowani uzytkownicy */}
                 <Link href="/dashboard" className={classes.navLink}>Moje kursy</Link>
                 <div className={classes.userInfo}>
                   <span>Witaj, {user.email?.split('@')[0]}</span>
@@ -66,7 +63,6 @@ export default function Navbar() {
                 </div>
               </>
             ) : (
-              /* Niezalogowani */
               <>
                 <Link href="/login"><button className={classes.loginButton}>Zaloguj się</button></Link>
                 <Link href="/register"><button className={classes.registerButton}>Zarejestruj się</button></Link>
