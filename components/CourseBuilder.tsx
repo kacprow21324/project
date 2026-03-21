@@ -2,8 +2,8 @@
 
 import { useReducer } from 'react';
 import type { Course, Section } from '@/types/courses';
+import { SectionList } from './SectionList';
 
-// Action Types
 export type CourseAction =
   | {
       type: 'UPDATE_COURSE_INFO';
@@ -27,6 +27,20 @@ export type CourseAction =
       payload: {
         sectionId: string;
         newTitle: string;
+      };
+    }
+  | {
+      type: 'ADD_LESSON_TO_SECTION';
+      payload: {
+        sectionId: string;
+        lesson: any;
+      };
+    }
+  | {
+      type: 'REMOVE_LESSON_FROM_SECTION';
+      payload: {
+        sectionId: string;
+        lessonId: string;
       };
     };
 
@@ -61,6 +75,33 @@ const courseReducer = (state: Course, action: CourseAction): Course => {
         sections: state.sections.map((section) =>
           section.id === action.payload.sectionId
             ? { ...section, title: action.payload.newTitle }
+            : section
+        ),
+      };
+    }
+
+    case 'ADD_LESSON_TO_SECTION': {
+      return {
+        ...state,
+        sections: state.sections.map((section) =>
+          section.id === action.payload.sectionId
+            ? { ...section, lessons: [...section.lessons, action.payload.lesson] }
+            : section
+        ),
+      };
+    }
+
+    case 'REMOVE_LESSON_FROM_SECTION': {
+      return {
+        ...state,
+        sections: state.sections.map((section) =>
+          section.id === action.payload.sectionId
+            ? {
+                ...section,
+                lessons: section.lessons.filter(
+                  (lesson) => lesson.id !== action.payload.lessonId
+                ),
+              }
             : section
         ),
       };
@@ -106,6 +147,20 @@ export const CourseBuilder = ({ initialCourse }: CourseBuilderProps) => {
     });
   };
 
+  const addLessonToSection = (sectionId: string, lesson: any) => {
+    dispatch({
+      type: 'ADD_LESSON_TO_SECTION',
+      payload: { sectionId, lesson },
+    });
+  };
+
+  const removeLessonFromSection = (sectionId: string, lessonId: string) => {
+    dispatch({
+      type: 'REMOVE_LESSON_FROM_SECTION',
+      payload: { sectionId, lessonId },
+    });
+  };
+
   return (
     <div>
       <h1>Course Builder</h1>
@@ -135,23 +190,25 @@ export const CourseBuilder = ({ initialCourse }: CourseBuilderProps) => {
 
       <section>
         <h2>Sections ({course.sections.length})</h2>
-        <ul>
-          {course.sections.map((section) => (
-            <li key={section.id}>
-              <input
-                type="text"
-                value={section.title}
-                onChange={(e) =>
-                  updateSectionTitle(section.id, e.target.value)
-                }
-              />
-              <button onClick={() => removeSection(section.id)}>
-                Remove Section
-              </button>
-              <p>Lessons: {section.lessons.length}</p>
-            </li>
-          ))}
-        </ul>
+        <button
+          onClick={() => {
+            const newSection: Section = {
+              id: `section-${Date.now()}`,
+              title: 'New Section',
+              lessons: [],
+            };
+            addSection(newSection);
+          }}
+        >
+          Add Section
+        </button>
+        <SectionList
+          sections={course.sections}
+          onUpdateSectionTitle={updateSectionTitle}
+          onRemoveSection={removeSection}
+          onAddLessonToSection={addLessonToSection}
+          onRemoveLessonFromSection={removeLessonFromSection}
+        />
       </section>
 
       <section>
