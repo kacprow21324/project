@@ -28,7 +28,6 @@ export default function LoginForm() {
         return;
       }
 
-      // Sukces - przekieruj na dashboard
       router.push('/dashboard');
     } catch (err: any) {
       setServerError(err.message || 'Coś poszło nie tak');
