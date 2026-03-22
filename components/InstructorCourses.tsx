@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Course } from '@/types/courses';
 import { CourseBuilder } from './CourseBuilder';
+import { supabase } from '@/lib/supabaseClient';
 
 interface InstructorCoursesProps {
   initialCourses: Course[];
@@ -16,7 +17,38 @@ export const InstructorCourses = ({
   const [courses, setCourses] = useState<Course[]>(initialCourses);
   const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
 
-  const handleCourseUpdate = (updatedCourse: Course) => {
+  const handleCourseUpdate = async (updatedCourse: Course) => {
+    let category_id = null;
+    if (updatedCourse.category) {
+      const { data, error: catError } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('title', updatedCourse.category)
+        .single();
+      if (catError) {
+        console.error('Error finding category:', catError);
+      } else {
+        category_id = data?.id;
+      }
+    }
+
+    const { error } = await supabase
+      .from('courses')
+      .update({
+        title: updatedCourse.title,
+        description: updatedCourse.description,
+        level: updatedCourse.level,
+        price: updatedCourse.price,
+        category_id: category_id,
+      })
+      .eq('id', updatedCourse.id);
+
+    if (error) {
+      console.error('Error updating course:', error);
+      alert('Błąd podczas aktualizacji kursu: ' + error.message);
+      return;
+    }
+
     const newCourses = courses.map((c) =>
       c.id === updatedCourse.id ? updatedCourse : c
     );
@@ -24,21 +56,55 @@ export const InstructorCourses = ({
     if (onCoursesUpdate) {
       onCoursesUpdate(newCourses);
     }
+    setEditingCourseId(null);
   };
 
-  const handleAddCourse = () => {
-    const newCourse: Course = {
-      id: `course-${Date.now()}`,
+  const handleAddCourse = async () => {
+    const newCourseData = {
       title: 'Nowy kurs',
-      desc: '',
-      sections: [],
+      description: '',
+      level: '',
+      price: 0,
+      category_id: null,
     };
-    setCourses([...courses, newCourse]);
+    const { data, error } = await supabase
+      .from('courses')
+      .insert(newCourseData)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error adding course:', error);
+      alert('Błąd podczas dodawania kursu: ' + error.message);
+      return;
+    }
+
+    const newCourse: Course = { ...data, sections: [] };
+    const updatedCourses = [...courses, newCourse];
+    setCourses(updatedCourses);
+    if (onCoursesUpdate) {
+      onCoursesUpdate(updatedCourses);
+    }
   };
 
-  const handleDeleteCourse = (courseId: string) => {
-    if (confirm('Czy na pewno chcesz usunąć ten kurs?')) {
-      setCourses(courses.filter((c) => c.id !== courseId));
+  const handleDeleteCourse = async (courseId: string) => {
+    if (!confirm('Czy na pewno chcesz usunąć ten kurs?')) return;
+
+    const { error } = await supabase
+      .from('courses')
+      .delete()
+      .eq('id', courseId);
+
+    if (error) {
+      console.error('Error deleting course:', error);
+      alert('Błąd podczas usuwania kursu: ' + error.message);
+      return;
+    }
+
+    const newCourses = courses.filter((c) => c.id !== courseId);
+    setCourses(newCourses);
+    if (onCoursesUpdate) {
+      onCoursesUpdate(newCourses);
     }
   };
 
@@ -72,8 +138,9 @@ export const InstructorCourses = ({
             <tr>
               <th>Tytuł</th>
               <th>Opis</th>
-              <th>Sekcje</th>
-              <th>Lekcje</th>
+              <th>Poziom</th>
+              <th>Cena</th>
+              <th>Kategoria</th>
               <th>Akcje</th>
             </tr>
           </thead>
@@ -81,14 +148,10 @@ export const InstructorCourses = ({
             {courses.map((course) => (
               <tr key={course.id}>
                 <td>{course.title}</td>
-                <td>{course.desc}</td>
-                <td>{course.sections.length}</td>
-                <td>
-                  {course.sections.reduce(
-                    (sum, s) => sum + s.lessons.length,
-                    0
-                  )}
-                </td>
+                <td>{course.description}</td>
+                <td>{course.level}</td>
+                <td>{course.price}</td>
+                <td>{course.category}</td>
                 <td>
                   <button onClick={() => setEditingCourseId(course.id)}>
                     Edytuj

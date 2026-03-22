@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html{
+    min-height: 100%;
+}
+
 :root{
     --background-color: #eee;
     --background-color-2: #fff;
@@ -16,24 +20,57 @@
 body{
     margin: 0 0 0;
     background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main{
     margin: 2rem;
+    flex: 1;
 }
 
 .welcomeCard{
-    display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
     background-color: var(--background-color-2);
     border-radius: 0.5rem;
-    margin: 4rem;
+    max-width: 50%;
+    color: var(--main-text-color);
 }
 
-/* temp */
-input{
-    border: 2px solid #bbb;
+.welcomeCardBG{
+    background-image: url('/assets/mainpage.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    margin: 0;
+    border-radius: 1rem;
+}
+
+.h1Title{
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--main-text-hover);
+}
+
+.footer{
+    text-align: center;
+    color: var(--main-text-hover);
+    width: 100%;
+    padding: 1rem;
+    margin-top: auto;
+    background-color: var(--background-color);
+    border-top: 1px solid #ddd;
+}
+
+.pageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

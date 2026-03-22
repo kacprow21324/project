@@ -1,0 +1,58 @@
+.card{
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: var(--background-color-2);
+    border-radius: 0.5rem;
+    max-width: 50%;
+    color: var(--main-text-color);
+    margin-top: 1rem;
+    min-width: 40%;
+}
+
+.inputSection{
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.inputSection label{
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.authForm{
+    min-width: 100%;
+}
+
+.inputBox{
+    border: 2px solid #ccc;
+    border-radius: 0.3rem;
+    min-width: 100%;
+    height: 2.5rem;
+}
+
+.authButton{
+    background-color: var(--main-text-hover);
+    padding: 0.7rem;
+    color: var(--background-color);
+    font-weight: bold;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    min-width: 100%;
+    cursor: pointer;
+}
+
+.authButton:hover{
+    background-color: var(--navbar-text-hover);
+    
+}
+
+.h1Title{
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--main-text-hover);
+}

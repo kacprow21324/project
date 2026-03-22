@@ -36,6 +36,9 @@ export interface Section {
 export interface Course {
   id: string;
   title: string;
-  desc: string;
+  description: string;
+  level: string;
+  price: number;
+  category: string;
   sections: Section[];
 }

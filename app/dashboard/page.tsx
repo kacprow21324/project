@@ -4,15 +4,15 @@ import { StudentCourses } from '@/components/StudentCourses';
 import { InstructorCourses } from '@/components/InstructorCourses';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { mockCourse } from '@/types/coursesMockData';
+import type { Course } from '@/types/courses';
 
 export default function DashboardPage() {
   const [userRole, setUserRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState([mockCourse]);
+  const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
-    const fetchUserRole = async () => {
+    const initializeDashboard = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
 
@@ -21,27 +21,53 @@ export default function DashboardPage() {
           return;
         }
 
-        const { data, error } = await supabase
+        // Fetch user role
+        const { data: roleData, error: roleError } = await supabase
           .from('users')
           .select('role_id')
           .eq('UID', session.user.id)
           .single();
 
-        if (!error && data) {
-          const role = data.role_id === 2 ? 'Instructor' : 'User';
-          setUserRole(role);
+        let role: string;
+        if (!roleError && roleData) {
+          role = roleData.role_id === 2 ? 'Instructor' : 'User';
         } else {
-          setUserRole('User');
+          role = 'User';
         }
+        setUserRole(role);
+
+        // Courses
+        let coursesData: Course[] = [];
+        if (role === 'Instructor') {
+          const { data, error } = await supabase.from('courses').select('*');
+          if (error) {
+            console.error('Error fetching courses for instructor:', error);
+          } else {
+            coursesData = data || [];
+          }
+        } else {
+          // For users, fetch only signed up courses
+          const { data, error } = await supabase
+            .from('course_signups')
+            .select('courses(*)')
+            .eq('user_uid', session.user.id);
+          if (error) {
+            console.error('Error fetching courses for user:', error);
+          } else {
+            coursesData = data?.map(item => item.courses).filter(Boolean) || [];
+          }
+        }
+        setCourses(coursesData);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error initializing dashboard:', error);
         setUserRole('User');
+        setCourses([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserRole();
+    initializeDashboard();
   }, []);
 
   if (loading) {

@@ -1,15 +1,16 @@
 'use client';
 
-import { useReducer, useEffect } from 'react';
+import { useReducer, useState, useEffect } from 'react';
 import type { Course, Section } from '@/types/courses';
 import { SectionList } from './SectionList';
+import { supabase } from '@/lib/supabaseClient';
 
 export type CourseAction =
   | {
       type: 'UPDATE_COURSE_INFO';
       payload: {
-        field: 'title' | 'desc';
-        value: string;
+        field: 'title' | 'description' | 'level' | 'price' | 'category';
+        value: string | number;
       };
     }
   | {
@@ -117,16 +118,35 @@ interface CourseBuilderProps {
   onCourseUpdate?: (course: Course) => void;
 }
 
+interface Category {
+  id: string | number;
+  title: string;
+}
+
 export const CourseBuilder = ({ initialCourse, onCourseUpdate }: CourseBuilderProps) => {
-  const [course, dispatch] = useReducer(courseReducer, initialCourse);
+  const initialCourseWithSections = { ...initialCourse, sections: initialCourse.sections || [], category: initialCourse.category || '' };
+  const [course, dispatch] = useReducer(courseReducer, initialCourseWithSections);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      const { data, error } = await supabase.from('categories').select('id, title');
+      if (error) {
+        console.error('Error fetching categories:', error);
+      } else {
+        setCategories(data || []);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const handleSave = () => {
     if (onCourseUpdate) {
       onCourseUpdate(course);
     }
-  }, [course, onCourseUpdate]);
+  };
 
-  const updateCourseInfo = (field: 'title' | 'desc', value: string) => {
+  const updateCourseInfo = (field: 'title' | 'description' | 'level' | 'price' | 'category', value: string | number) => {
     dispatch({
       type: 'UPDATE_COURSE_INFO',
       payload: { field, value },
@@ -173,10 +193,10 @@ export const CourseBuilder = ({ initialCourse, onCourseUpdate }: CourseBuilderPr
       <h1>Course Builder</h1>
 
       <section>
-        <h2>Course Information</h2>
+        <h2>Informacje o kursie</h2>
         <div>
           <label>
-            Title:
+            Tytuł:
             <input
               type="text"
               value={course.title}
@@ -186,28 +206,65 @@ export const CourseBuilder = ({ initialCourse, onCourseUpdate }: CourseBuilderPr
         </div>
         <div>
           <label>
-            Description:
+            Opis:
             <textarea
-              value={course.desc}
-              onChange={(e) => updateCourseInfo('desc', e.target.value)}
+              value={course.description}
+              onChange={(e) => updateCourseInfo('description', e.target.value)}
             />
+          </label>
+        </div>
+        <div>
+          <label>
+            Poziom:
+            <select value={course.level} onChange={(e) => updateCourseInfo('level', e.target.value)}>
+              <option value="">Wybierz poziom</option>
+              <option value="Podstawowy">Podstawowy</option>
+              <option value="Średnio Zaawansowany">Średnio Zaawansowany</option>
+              <option value="Zaawansowany">Zaawansowany</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>
+            Cena:
+            <input
+              type="number"
+              value={course.price}
+              onChange={(e) => updateCourseInfo('price', parseFloat(e.target.value) || 0)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Kategoria:
+            <select
+              value={course.category}
+              onChange={(e) => updateCourseInfo('category', e.target.value)}
+            >
+              <option value="">Wybierz kategorię</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.title}>
+                  {cat.title}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
       </section>
 
       <section>
-        <h2>Sections ({course.sections.length})</h2>
+        <h2>Lekcje ({course.sections.length})</h2>
         <button
           onClick={() => {
             const newSection: Section = {
               id: `section-${Date.now()}`,
-              title: 'New Section',
+              title: 'Nowa lekcja',
               lessons: [],
             };
             addSection(newSection);
           }}
         >
-          Add Section
+          Dodaj lekcję
         </button>
         <SectionList
           sections={course.sections}
@@ -219,7 +276,11 @@ export const CourseBuilder = ({ initialCourse, onCourseUpdate }: CourseBuilderPr
       </section>
 
       <section>
-        <h2>Course State (Debug)</h2>
+        <button onClick={handleSave}>Zapisz kurs</button>
+      </section>
+
+      <section>
+        <h2>Debug</h2>
         <pre>{JSON.stringify(course, null, 2)}</pre>
       </section>
     </div>

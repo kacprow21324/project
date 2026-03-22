@@ -5,6 +5,7 @@ import { RegisterFormData } from '@/types/auth';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import classes from './AuthForm.module.css';
 
 export default function RegisterForm() {
   const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>();
@@ -50,10 +51,11 @@ export default function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+    <div className={`${classes.card} shadow-lg`}>
+    <form onSubmit={handleSubmit(onSubmit)} className={classes.authForm}>
+      <div className={classes.inputSection}>
         <label htmlFor="email">Email:</label>
-        <input
+        <input className={classes.inputBox}
           id="email"
           type="email"
           {...register('email', { required: 'Email jest wymagany' })}
@@ -61,9 +63,9 @@ export default function RegisterForm() {
         {errors.email && <span style={{ color: 'red' }}>{errors.email.message}</span>}
       </div>
 
-      <div>
+      <div className={classes.inputSection}>
         <label htmlFor="password">Hasło:</label>
-        <input
+        <input className={classes.inputBox}
           id="password"
           type="password"
           {...register('password', { required: 'Hasło jest wymagane' })}
@@ -71,7 +73,7 @@ export default function RegisterForm() {
         {errors.password && <span style={{ color: 'red' }}>{errors.password.message}</span>}
       </div>
 
-      <div>
+      <div className={classes.inputSection}>
         <label htmlFor="role">Rola:</label>
         <select id="role" {...register('role', { required: 'Rola jest wymagana' })}>
           <option value="">Wybierz rolę</option>
@@ -83,9 +85,10 @@ export default function RegisterForm() {
 
       {serverError && <p style={{ color: 'red' }}>{serverError}</p>}
 
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} className={classes.authButton}>
         {loading ? 'Poczekaj...' : 'Zarejestruj się'}
       </button>
     </form>
+    </div>
   );
 }

@@ -20,7 +20,7 @@ export default function RootLayout({
 
         <main>{children}</main>
 
-        <footer>
+        <footer className="footer">
           <p>&copy; 2026 Marketplace Kursów Online. Wszystkie prawa zastrzeżone.</p>
         </footer>
       </body>

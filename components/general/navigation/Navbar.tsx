@@ -10,6 +10,7 @@ export default function Navbar() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const [userRole, setUserRole] = useState<string>('User')
 
   useEffect(() => {
     const checkSession = async () => {
@@ -17,9 +18,23 @@ export default function Navbar() {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
           setUser(session.user)
+          // Fetch user role
+          const { data: roleData, error: roleError } = await supabase
+            .from('users')
+            .select('role_id')
+            .eq('UID', session.user.id)
+            .single();
+          if (!roleError && roleData) {
+            setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
+          } else {
+            setUserRole('User');
+          }
+        } else {
+          setUserRole('User');
         }
       } catch (error) {
         console.error('Błąd sprawdzania sesji:', error)
+        setUserRole('User');
       } finally {
         setLoading(false)
       }
@@ -27,11 +42,28 @@ export default function Navbar() {
 
     checkSession()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
         setUser(session.user)
+        // Fetch role when user logs in
+        try {
+          const { data: roleData, error: roleError } = await supabase
+            .from('users')
+            .select('role_id')
+            .eq('UID', session.user.id)
+            .single();
+          if (!roleError && roleData) {
+            setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
+          } else {
+            setUserRole('User');
+          }
+        } catch (err) {
+          console.error('Error fetching role:', err);
+          setUserRole('User');
+        }
       } else {
         setUser(null)
+        setUserRole('User');
       }
     })
 
@@ -56,7 +88,7 @@ export default function Navbar() {
               <>
                 <Link href="/dashboard" className={classes.navLink}>Moje kursy</Link>
                 <div className={classes.userInfo}>
-                  <span>Witaj, {user.email?.split('@')[0]}</span>
+                  <span>Witaj, {user.email?.split('@')[0]}!</span><span>({userRole})</span>
                   <button onClick={handleLogout} className={classes.logoutButton}>
                     Wyloguj się
                   </button>

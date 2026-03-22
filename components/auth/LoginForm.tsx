@@ -5,6 +5,7 @@ import { LoginFormData } from '@/types/auth';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import classes from './AuthForm.module.css';
 
 export default function LoginForm() {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
@@ -37,10 +38,11 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+    <div className={classes.card}>
+    <form onSubmit={handleSubmit(onSubmit)} className={classes.authForm}>
+      <div className={classes.inputSection}>
         <label htmlFor="email">Email:</label>
-        <input
+        <input className={classes.inputBox}
           id="email"
           type="email"
           {...register('email', { required: 'Email jest wymagany' })}
@@ -48,9 +50,9 @@ export default function LoginForm() {
         {errors.email && <span style={{ color: 'red' }}>{errors.email.message}</span>}
       </div>
 
-      <div>
+      <div className={classes.inputSection}>
         <label htmlFor="password">Hasło:</label>
-        <input
+        <input className={classes.inputBox}
           id="password"
           type="password"
           {...register('password', { required: 'Hasło jest wymagane' })}
@@ -60,9 +62,10 @@ export default function LoginForm() {
 
       {serverError && <p style={{ color: 'red' }}>{serverError}</p>}
 
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} className={classes.authButton}>
         {loading ? 'Poczekaj...' : 'Zaloguj się'}
       </button>
     </form>
+    </div>
   );
 }
