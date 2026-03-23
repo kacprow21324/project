@@ -22,7 +22,8 @@ export default function Courses() {
       setLoading(false);
 
       // session
-        const { data: { session } } = await supabase.auth.getSession()
+        const { data: authData } = await supabase.auth.getSession()
+        const session = authData?.session;
         if (session?.user) {
           setUser(session.user)
           
@@ -41,7 +42,8 @@ export default function Courses() {
   }, []);
 
   const handleEnroll = async (courseId: string) => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: authData } = await supabase.auth.getSession();
+    const session = authData?.session;
     if (!session?.user) {
       alert('Musisz być zalogowany, aby się zapisać.');
       return;
