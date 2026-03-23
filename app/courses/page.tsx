@@ -22,36 +22,36 @@ export default function Courses() {
       setLoading(false);
 
       // session
-        const { data: authData } = await supabase.auth.getSession()
-        const session = authData?.session;
-        if (session?.user) {
-          setUser(session.user)
-          
-          // user role
-          const { data: roleData, error: roleError } = await supabase
-            .from('users')
-            .select('role_id')
-            .eq('UID', session.user.id)
-            .single();
-          if (!roleError && roleData) {
-            setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
-          }
+      const { data: authData } = await supabase.auth.getSession();
+      const authedUser = authData?.session?.user;
+      if (authedUser) {
+        setUser(authedUser);
+
+        // user role
+        const { data: roleData, error: roleError } = await supabase
+          .from('users')
+          .select('role_id')
+          .eq('UID', authedUser.id)
+          .single();
+        if (!roleError && roleData) {
+          setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
         }
+      }
     };
     fetchCourses();
   }, []);
 
   const handleEnroll = async (courseId: string) => {
     const { data: authData } = await supabase.auth.getSession();
-    const session = authData?.session;
-    if (!session?.user) {
+    const authedUser = authData?.session?.user;
+    if (!authedUser) {
       alert('Musisz być zalogowany, aby się zapisać.');
       return;
     }
 
     const { error } = await supabase
       .from('course_signups')
-      .insert({ course_id: courseId, user_uid: session.user.id });
+      .insert({ course_id: courseId, user_uid: authedUser.id });
 
     if (error) {
       console.error('Error enrolling:', error);
