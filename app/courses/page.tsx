@@ -92,8 +92,8 @@ export default function Courses() {
                 <td>
                   {userRole == 'User' ? (
                     <button onClick={() => handleEnroll(course.id)}>
-                    Zapisz się
-                  </button>
+                      Zapisz się
+                    </button>
                   ) : (
                     <span>Jako instruktor nie możesz się zapisać na kurs</span>
                   )}
