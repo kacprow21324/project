@@ -54,7 +54,9 @@ export default function DashboardPage() {
           if (error) {
             console.error('Error fetching courses for user:', error);
           } else {
-            coursesData = data?.map(item => item.courses).filter(Boolean) || [];
+            coursesData = (data as unknown as Array<{ courses: Course | null }> | null)
+            ?.map(item => item.courses)
+            .filter((c): c is Course => c !== null) || [];;
           }
         }
         setCourses(coursesData);
