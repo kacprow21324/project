@@ -22,11 +22,12 @@ export default function Courses() {
       setLoading(false);
 
       // session
-        const { data: { session } } = await supabase.auth.getSession()
-        if (session?.user) {
-          setUser(session.user)
-        }
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.user) {
+        setUser(session.user)
+      }
       // user role
+      if (session?.user) {
         const { data: roleData, error: roleError } = await supabase
           .from('users')
           .select('role_id')
@@ -35,6 +36,10 @@ export default function Courses() {
         if (!roleError && roleData) {
           setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
         }
+      }
+      else {
+        setUserRole('User');
+      }
     };
     fetchCourses();
   }, []);
@@ -89,8 +94,8 @@ export default function Courses() {
                 <td>
                   {userRole == 'User' ? (
                     <button onClick={() => handleEnroll(course.id)}>
-                    Zapisz się
-                  </button>
+                      Zapisz się
+                    </button>
                   ) : (
                     <span>Jako instruktor nie możesz się zapisać na kurs</span>
                   )}

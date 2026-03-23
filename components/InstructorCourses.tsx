@@ -16,6 +16,7 @@ export const InstructorCourses = ({
 }: InstructorCoursesProps) => {
   const [courses, setCourses] = useState<Course[]>(initialCourses);
   const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null)
 
   const handleCourseUpdate = async (updatedCourse: Course) => {
     let category_id = null;
@@ -60,13 +61,20 @@ export const InstructorCourses = ({
   };
 
   const handleAddCourse = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    // Brak sesji
+    if (!session?.user) {
+      return;
+    }
     const newCourseData = {
       title: 'Nowy kurs',
       description: '',
       level: '',
       price: 0,
       category_id: null,
+      instructor_uid: session.user.id,
     };
+
     const { data, error } = await supabase
       .from('courses')
       .insert(newCourseData)
