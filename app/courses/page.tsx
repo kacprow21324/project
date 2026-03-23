@@ -25,15 +25,16 @@ export default function Courses() {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
           setUser(session.user)
-        }
-      // user role
-        const { data: roleData, error: roleError } = await supabase
-          .from('users')
-          .select('role_id')
-          .eq('UID', session.user.id)
-          .single();
-        if (!roleError && roleData) {
-          setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
+          
+          // user role
+          const { data: roleData, error: roleError } = await supabase
+            .from('users')
+            .select('role_id')
+            .eq('UID', session.user.id)
+            .single();
+          if (!roleError && roleData) {
+            setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
+          }
         }
     };
     fetchCourses();
