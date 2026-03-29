@@ -2,22 +2,36 @@
 
 import { StudentCourses } from '@/components/StudentCourses';
 import { InstructorCourses } from '@/components/InstructorCourses';
+import { AdminPanel } from '@/components/AdminPanel';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import type { Course } from '@/types/courses';
+import {
+  mapCourseRowToAppCourse,
+  roleIdToName,
+  type AppCourse,
+  type CourseRow,
+  type UserRole,
+} from '@/lib/appData';
 
 export default function DashboardPage() {
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<AppCourse[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isActive = true;
+
     const initializeDashboard = async () => {
+      setLoadError(null);
+
       try {
         const { data: { session } } = await supabase.auth.getSession();
 
         if (!session?.user) {
-          setLoading(false);
+          if (isActive) {
+            setLoading(false);
+          }
           return;
         }
 
@@ -28,61 +42,91 @@ export default function DashboardPage() {
           .eq('UID', session.user.id)
           .single();
 
-        let role: string;
+        let role: UserRole;
         if (!roleError && roleData) {
-          role = roleData.role_id === 2 ? 'Instructor' : 'User';
+          role = roleIdToName(roleData.role_id);
         } else {
           role = 'User';
         }
+        if (!isActive) return;
         setUserRole(role);
 
         // Courses
-        let coursesData: Course[] = [];
+        let coursesData: AppCourse[] = [];
         if (role === 'Instructor') {
-          const { data, error } = await supabase.from('courses').select('*');
+          const { data, error } = await supabase
+            .from('courses')
+            .select('id, title, description, level, price, category_id, instructor_uid, isOpen, categories(id, title)')
+            .eq('instructor_uid', session.user.id)
+            .order('created_at', { ascending: false });
           if (error) {
             console.error('Error fetching courses for instructor:', error);
           } else {
-            coursesData = data || [];
+            coursesData = (data || []).map((row) => mapCourseRowToAppCourse(row));
           }
-        } else {
+        } else if (role === 'User') {
           // For users, fetch only signed up courses
           const { data, error } = await supabase
             .from('course_signups')
-            .select('courses(*)')
+            .select('courses(id, title, description, level, price, category_id, instructor_uid, isOpen, categories(id, title))')
             .eq('user_uid', session.user.id);
           if (error) {
             console.error('Error fetching courses for user:', error);
           } else {
-            coursesData = (data as unknown as Array<{ courses: Course | null }> | null)
-            ?.map(item => item.courses)
-            .filter((c): c is Course => c !== null) || [];;
+            const signupRows =
+              (data as Array<{ courses: CourseRow | CourseRow[] | null }> | null) ?? [];
+
+            coursesData = signupRows.flatMap((item) => {
+              if (!item.courses) {
+                return [];
+              }
+
+              const relatedCourses = Array.isArray(item.courses)
+                ? item.courses
+                : [item.courses];
+
+              return relatedCourses.map((course) => mapCourseRowToAppCourse(course));
+            });
           }
         }
+        if (!isActive) return;
         setCourses(coursesData);
       } catch (error) {
         console.error('Error initializing dashboard:', error);
-        setUserRole('User');
-        setCourses([]);
+        if (isActive) {
+          setLoadError('Nie udało się załadować dashboardu. Spróbuj odświeżyć stronę.');
+          setUserRole('User');
+          setCourses([]);
+        }
       } finally {
-        setLoading(false);
+        if (isActive) {
+          setLoading(false);
+        }
       }
     };
 
     initializeDashboard();
+
+    return () => {
+      isActive = false;
+    };
   }, []);
 
   if (loading) {
     return <div>Ładowanie...</div>;
   }
 
+  if (loadError) {
+    return <div>{loadError}</div>;
+  }
+
   return (
     <div>
-      {userRole === 'Instructor' ? (
+      {userRole === 'Instructor' && (
         <InstructorCourses initialCourses={courses} onCoursesUpdate={setCourses} />
-      ) : (
-        <StudentCourses courses={courses} />
       )}
+      {userRole === 'User' && <StudentCourses courses={courses} />}
+      {userRole === 'Admin' && <AdminPanel />}
     </div>
   );
 }

@@ -1,0 +1,134 @@
+.page {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1rem;
+}
+
+.sidebar {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem;
+  align-self: start;
+}
+
+.sidebarTitle {
+  margin-top: 0;
+}
+
+.lessonNav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.lessonNavLink {
+  display: block;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #1f2937;
+}
+
+.active {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.content {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.sectionCard {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.backLink {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.progressBox {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background: #f8fafc;
+}
+
+.progressWrap {
+  width: 100%;
+  background: #d1d5db;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+.progressLabel {
+  margin: 0.45rem 0;
+  color: #4b5563;
+  font-size: 0.88rem;
+}
+
+.completeButton {
+  border-radius: 8px;
+  border: 1px solid #1d4ed8;
+  background: #1d4ed8;
+  color: #ffffff;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.lessonTopNav {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+
+.arrowGroup {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.arrowLink,
+.arrowDisabled {
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.86rem;
+}
+
+.arrowLink {
+  color: #1d4ed8;
+  text-decoration: none;
+  background: #eff6ff;
+}
+
+.arrowDisabled {
+  color: #94a3b8;
+  background: #f8fafc;
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+}

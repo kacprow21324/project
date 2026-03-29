@@ -1,11 +1,11 @@
-import type { Section } from '@/types/courses';
+import type { Section, Lesson } from '@/types/courses';
 import { SectionItem } from './SectionItem';
 
 interface SectionListProps {
   sections: Section[];
   onUpdateSectionTitle: (sectionId: string, newTitle: string) => void;
   onRemoveSection: (sectionId: string) => void;
-  onAddLessonToSection: (sectionId: string, lesson: any) => void;
+  onAddLessonToSection: (sectionId: string, lesson: Lesson) => void;
   onRemoveLessonFromSection: (sectionId: string, lessonId: string) => void;
 }
 

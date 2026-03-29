@@ -36,12 +36,24 @@ export function getProgressStatus(
   return 'In Progress';
 }
 
-export function getTotalBlocksInCourse(course: any): number {
-  return course.sections.reduce((sum: number, section: any) => {
+interface ProgressLesson {
+  contentBlocks: unknown[];
+}
+
+interface ProgressSection {
+  lessons: ProgressLesson[];
+}
+
+interface ProgressCourse {
+  sections: ProgressSection[];
+}
+
+export function getTotalBlocksInCourse(course: ProgressCourse): number {
+  return course.sections.reduce((sum: number, section: ProgressSection) => {
     return (
       sum +
       section.lessons.reduce(
-        (lessonSum: number, lesson: any) =>
+        (lessonSum: number, lesson: ProgressLesson) =>
           lessonSum + lesson.contentBlocks.length,
         0
       )

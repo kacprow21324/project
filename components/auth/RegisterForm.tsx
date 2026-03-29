@@ -5,6 +5,7 @@ import { RegisterFormData } from '@/types/auth';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { roleNameToId } from '@/lib/appData';
 import classes from './AuthForm.module.css';
 
 export default function RegisterForm() {
@@ -21,6 +22,12 @@ export default function RegisterForm() {
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
+        options: {
+          data: {
+            username: data.username,
+            role: data.role,
+          },
+        },
       });
 
       if (authError) {
@@ -33,7 +40,7 @@ export default function RegisterForm() {
         .from('users')
         .insert({
           UID: authData.user?.id,
-          role_id: data.role === 'Instructor' ? 2 : 1,
+          role_id: roleNameToId(data.role),
         });
 
       if (userError) {
@@ -43,8 +50,9 @@ export default function RegisterForm() {
       }
 
       router.push('/login?registered=true');
-    } catch (err: any) {
-      setServerError(err.message || 'Coś poszło nie tak');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Coś poszło nie tak';
+      setServerError(message);
     } finally {
       setLoading(false);
     }
@@ -53,6 +61,17 @@ export default function RegisterForm() {
   return (
     <div className={`${classes.card} shadow-lg`}>
     <form onSubmit={handleSubmit(onSubmit)} className={classes.authForm}>
+      <div className={classes.inputSection}>
+        <label htmlFor="username">Nazwa użytkownika:</label>
+        <input
+          className={classes.inputBox}
+          id="username"
+          type="text"
+          {...register('username', { required: 'Nazwa użytkownika jest wymagana' })}
+        />
+        {errors.username && <span style={{ color: 'red' }}>{errors.username.message}</span>}
+      </div>
+
       <div className={classes.inputSection}>
         <label htmlFor="email">Email:</label>
         <input className={classes.inputBox}
@@ -79,6 +98,7 @@ export default function RegisterForm() {
           <option value="">Wybierz rolę</option>
           <option value="User">Użytkownik</option>
           <option value="Instructor">Instruktor</option>
+          <option value="Admin">Administrator</option>
         </select>
         {errors.role && <span style={{ color: 'red' }}>{errors.role.message}</span>}
       </div>

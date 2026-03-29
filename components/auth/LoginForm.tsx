@@ -30,8 +30,9 @@ export default function LoginForm() {
       }
 
       router.push('/dashboard');
-    } catch (err: any) {
-      setServerError(err.message || 'Coś poszło nie tak');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Coś poszło nie tak';
+      setServerError(message);
     } finally {
       setLoading(false);
     }

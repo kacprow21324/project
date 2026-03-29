@@ -69,6 +69,11 @@ main{
     border-top: 1px solid #ddd;
 }
 
+/* Legacy footer class retained for backwards compatibility with older pages. */
+.footer:empty {
+    display: none;
+}
+
 .pageContainer{
     display: flex;
     flex-direction: column;

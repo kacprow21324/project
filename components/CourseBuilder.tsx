@@ -1,7 +1,7 @@
 'use client';
 
 import { useReducer, useState, useEffect } from 'react';
-import type { Course, Section } from '@/types/courses';
+import type { Course, Section, Lesson } from '@/types/courses';
 import { SectionList } from './SectionList';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -34,7 +34,7 @@ export type CourseAction =
       type: 'ADD_LESSON_TO_SECTION';
       payload: {
         sectionId: string;
-        lesson: any;
+        lesson: Lesson;
       };
     }
   | {
@@ -174,7 +174,7 @@ export const CourseBuilder = ({ initialCourse, onCourseUpdate }: CourseBuilderPr
     });
   };
 
-  const addLessonToSection = (sectionId: string, lesson: any) => {
+  const addLessonToSection = (sectionId: string, lesson: Lesson) => {
     dispatch({
       type: 'ADD_LESSON_TO_SECTION',
       payload: { sectionId, lesson },

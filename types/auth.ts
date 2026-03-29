@@ -7,5 +7,5 @@ export interface RegisterFormData {
   username: string;
   email: string;
   password: string;
-  role: 'User' | 'Instructor';
+  role: 'User' | 'Instructor' | 'Admin';
 }

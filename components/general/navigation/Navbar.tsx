@@ -1,106 +1,136 @@
 'use client';
 
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { supabase } from "@/lib/supabaseClient"
-import classes from './Navbar.module.css'
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
+import type { User } from '@supabase/supabase-js';
+import { roleIdToName, type UserRole } from '@/lib/appData';
+import classes from './Navbar.module.css';
 
 export default function Navbar() {
-  const [user, setUser] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const router = useRouter()
-  const [userRole, setUserRole] = useState<string>('User')
+  const [user, setUser] = useState<User | null>(null);
+  const [userRole, setUserRole] = useState<UserRole>('User');
+  const router = useRouter();
 
   useEffect(() => {
+    let isActive = true;
+
     const checkSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession()
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!isActive) return;
+
         if (session?.user) {
-          setUser(session.user)
-          // Fetch user role
+          setUser(session.user);
           const { data: roleData, error: roleError } = await supabase
             .from('users')
             .select('role_id')
             .eq('UID', session.user.id)
             .single();
+
+          if (!isActive) return;
+
           if (!roleError && roleData) {
-            setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
+            setUserRole(roleIdToName(roleData.role_id));
           } else {
             setUserRole('User');
           }
         } else {
+          setUser(null);
           setUserRole('User');
         }
       } catch (error) {
-        console.error('Błąd sprawdzania sesji:', error)
-        setUserRole('User');
-      } finally {
-        setLoading(false)
+        console.error('Blad sprawdzania sesji:', error);
       }
-    }
+    };
 
-    checkSession()
+    checkSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (!isActive) return;
+
       if (session?.user) {
-        setUser(session.user)
-        // Fetch role when user logs in
-        try {
-          const { data: roleData, error: roleError } = await supabase
-            .from('users')
-            .select('role_id')
-            .eq('UID', session.user.id)
-            .single();
-          if (!roleError && roleData) {
-            setUserRole(roleData.role_id === 2 ? 'Instructor' : 'User');
-          } else {
-            setUserRole('User');
-          }
-        } catch (err) {
-          console.error('Error fetching role:', err);
-          setUserRole('User');
-        }
+        setUser(session.user);
+
+        const roleResult = await supabase
+          .from('users')
+          .select('role_id')
+          .eq('UID', session.user.id)
+          .single();
+
+        if (!isActive) return;
+
+        setUserRole(roleResult.data ? roleIdToName(roleResult.data.role_id) : 'User');
       } else {
-        setUser(null)
+        setUser(null);
         setUserRole('User');
       }
-    })
+    });
 
     return () => {
-      subscription?.unsubscribe()
-    }
-  }, [])
+      isActive = false;
+      subscription?.unsubscribe();
+    };
+  }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut()
-    setUser(null)
-    router.push('/')
-  }
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push('/');
+  };
 
   return (
-    <header className={`${classes.headerBar} shadow-lg`}>
-        <div className={classes.siteName}><Link href="/">Marketplace Kursów Online</Link></div>
-        <div className={classes.navLinks}>
-            <Link href="/courses" className={classes.navLink}>Przeglądaj</Link>
+    <header className={classes.headerWrap}>
+      <div className={classes.infoBar}>
+        <div className={classes.infoInner}>
+          <p className={classes.infoText}>Nowe kursy co tydzien • Nauka online • Certyfikaty ukonczenia</p>
+          <div className={classes.infoLinks}>
+            <Link href="/courses" className={classes.infoLink}>Dla firm</Link>
+            <Link href="/dashboard" className={classes.infoLink}>Panel kursanta</Link>
+            <Link href="/courses" className={classes.infoLink}>Pomoc</Link>
+          </div>
+        </div>
+      </div>
 
+      <div className={classes.mainBar}>
+        <div className={classes.mainInner}>
+          <div className={classes.brandBlock}>
+            <Link href="/" className={classes.siteName}>Marketplace Kursow Online</Link>
+            <p className={classes.siteSub}>Twoja platforma rozwoju kompetencji</p>
+          </div>
+
+          <nav className={classes.navCenter}>
+            <Link href="/courses" className={classes.navLink}>Katalog kursow</Link>
+            <Link href="/courses" className={classes.navLink}>Sciezki kariery</Link>
+            <Link href="/dashboard" className={classes.navLink}>Moja nauka</Link>
+            <Link href="/courses" className={classes.navLink}>Dla instruktorow</Link>
+          </nav>
+
+          <div className={classes.authArea}>
             {user ? (
               <>
-                <Link href="/dashboard" className={classes.navLink}>Moje kursy</Link>
                 <div className={classes.userInfo}>
-                  <span>Witaj, {user.email?.split('@')[0]}!</span><span>({userRole})</span>
-                  <button onClick={handleLogout} className={classes.logoutButton}>
-                    Wyloguj się
-                  </button>
+                  <span>Witaj, {user.email?.split('@')[0]}</span>
+                  <span className={classes.rolePill}>{userRole}</span>
                 </div>
+                <Link href="/dashboard" className={classes.dashboardBtn}>Dashboard</Link>
+                <button onClick={handleLogout} className={classes.logoutButton}>Wyloguj</button>
               </>
             ) : (
               <>
-                <Link href="/login"><button className={classes.loginButton}>Zaloguj się</button></Link>
-                <Link href="/register"><button className={classes.registerButton}>Zarejestruj się</button></Link>
+                <Link href="/login" className={classes.loginButton}>Zaloguj</Link>
+                <Link href="/register" className={classes.registerButton}>Zaloz konto</Link>
               </>
             )}
+          </div>
         </div>
+      </div>
     </header>
-  )
+  );
 }

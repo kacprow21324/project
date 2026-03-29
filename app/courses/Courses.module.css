@@ -1,0 +1,147 @@
+.page {
+  display: grid;
+  gap: 1rem;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.heading {
+  margin: 0;
+  color: #1f2937;
+}
+
+.subtext {
+  margin: 0.25rem 0 0;
+  color: #4b5563;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+}
+
+.filters {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 1rem;
+  display: grid;
+  gap: 0.8rem;
+  align-self: start;
+}
+
+.filterTitle {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.label {
+  display: grid;
+  gap: 0.35rem;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.input,
+.select,
+.search {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.95rem;
+}
+
+.coursesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.9rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #111827;
+}
+
+.meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.8rem;
+}
+
+.description {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.35;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.linkBtn,
+.primaryBtn,
+.secondaryBtn {
+  border-radius: 8px;
+  border: 1px solid #9ca3af;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.linkBtn,
+.secondaryBtn {
+  background: #ffffff;
+  color: #1f2937;
+}
+
+.primaryBtn {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+
+.message {
+  padding: 0.9rem;
+  border: 1px dashed #9ca3af;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

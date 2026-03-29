@@ -1,92 +1,159 @@
-.headerBar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem;
-    background-color: var(--navbar-color);
+.headerWrap {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: 0 6px 20px rgba(7, 16, 38, 0.2);
 }
 
-.siteName{
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'source sans pro', 'arial', 'sans serif';
-    color: var(--navbar-text-hover);
-    margin-left: 1rem;
+.infoBar {
+  background: #0a1329;
+  border-bottom: 1px solid #1f2a47;
 }
 
-.siteName:hover{
-    color: var(--navbar-text);
+.infoInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.45rem 1.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.navLinks{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.2rem;
-    font-family: 'source sans pro', 'arial', 'sans serif';
-    font-size: 1.1rem;
-    color: var(--navbar-text);
-    margin-right: 1rem;
+.infoText {
+  margin: 0;
+  color: #cdd8f3;
+  font-size: 0.82rem;
 }
 
-.navLink:hover{
-    color: var(--navbar-text-hover);
+.infoLinks {
+  display: flex;
+  gap: 0.85rem;
 }
 
-.loginButton{
-    padding: 0.2rem;
-    padding-left: 0.4rem;
-    padding-right: 0.5rem;
-    border-radius: 0.3rem;
-    border: 2px solid var(--background-color);
-    cursor: pointer;
+.infoLink {
+  color: #dbe6ff;
+  text-decoration: none;
+  font-size: 0.82rem;
 }
 
-.loginButton:hover{
-    color: var(--navbar-text-hover);
-    border-color: var(--navbar-text-hover);
+.mainBar {
+  background: #0f1d40;
 }
 
-.registerButton{
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.3rem;
-    border: 2px solid var(--navbar-text-hover);
-    background-color: var(--navbar-text-hover);
-    color: var(--navbar-color);
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s ease;
+.mainInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.8rem 1.3rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
 }
 
-.registerButton:hover{
-    background-color: transparent;
-    color: var(--navbar-text-hover);
+.brandBlock {
+  display: grid;
+  gap: 0.15rem;
 }
 
-.userInfo{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0 0.5rem;
+.siteName {
+  text-decoration: none;
+  color: #8aa4ff;
+  font-weight: 700;
+  font-size: 1.45rem;
 }
 
-.userInfo span{
-    color: var(--navbar-text-hover);
-    font-weight: 500;
+.siteSub {
+  margin: 0;
+  color: #b9c7eb;
+  font-size: 0.8rem;
 }
 
-.logoutButton{
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.3rem;
-    border: 2px solid var(--navbar-text-hover);
-    background-color: transparent;
-    color: var(--navbar-text-hover);
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s ease;
+.navCenter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.logoutButton:hover{
-    background-color: var(--navbar-text-hover);
-    color: var(--navbar-color);
+.navLink {
+  color: #e6eeff;
+  text-decoration: none;
+  font-size: 0.96rem;
+  font-weight: 500;
+}
+
+.navLink:hover,
+.infoLink:hover {
+  color: #7fb6ff;
+}
+
+.authArea {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #dce7ff;
+  font-size: 0.85rem;
+}
+
+.rolePill {
+  border: 1px solid #4f73b8;
+  background: #1b2f57;
+  color: #99bbff;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}
+
+.loginButton,
+.registerButton,
+.logoutButton,
+.dashboardBtn {
+  border: 1px solid #5a77ba;
+  border-radius: 8px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.loginButton,
+.dashboardBtn {
+  background: transparent;
+  color: #d5e2ff;
+}
+
+.registerButton {
+  background: #2b7de9;
+  border-color: #2b7de9;
+  color: #ffffff;
+}
+
+.logoutButton {
+  background: transparent;
+  color: #ffd6d6;
+  border-color: #d78f8f;
+}
+
+@media (max-width: 1080px) {
+  .mainInner {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .navCenter {
+    justify-content: flex-start;
+  }
+
+  .authArea {
+    justify-content: flex-start;
+  }
 }

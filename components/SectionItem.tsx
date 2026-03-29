@@ -1,11 +1,11 @@
-import type { Section } from '@/types/courses';
+import type { Section, Lesson } from '@/types/courses';
 import { LessonList } from './LessonList';
 
 interface SectionItemProps {
   section: Section;
   onUpdateTitle: (sectionId: string, newTitle: string) => void;
   onRemoveSection: (sectionId: string) => void;
-  onAddLesson: (sectionId: string, lesson: any) => void;
+  onAddLesson: (sectionId: string, lesson: Lesson) => void;
   onRemoveLesson: (sectionId: string, lessonId: string) => void;
 }
 
@@ -17,7 +17,7 @@ export const SectionItem = ({
   onRemoveLesson,
 }: SectionItemProps) => {
   const handleAddLesson = () => {
-    const newLesson = {
+    const newLesson: Lesson = {
       id: `lesson-${Date.now()}`,
       title: 'New Lesson',
       contentBlocks: [],

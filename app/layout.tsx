@@ -1,6 +1,6 @@
 import Navbar from "@/components/general/navigation/Navbar";
+import Footer from "@/components/general/navigation/Footer";
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,9 +20,7 @@ export default function RootLayout({
 
         <main>{children}</main>
 
-        <footer className="footer">
-          <p>&copy; 2026 Marketplace Kursów Online. Wszystkie prawa zastrzeżone.</p>
-        </footer>
+        <Footer />
       </body>
     </html>
   );

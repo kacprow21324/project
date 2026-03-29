@@ -34,11 +34,14 @@ export interface Section {
 }
 
 export interface Course {
-  id: string;
+  id: number;
   title: string;
   description: string;
   level: string;
   price: number;
   category: string;
+  categoryId?: number | null;
+  instructorUid?: string | null;
+  isOpen?: boolean;
   sections: Section[];
 }

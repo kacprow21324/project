@@ -1,0 +1,133 @@
+.panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.headerCard,
+.card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.title {
+  margin: 0;
+  color: #111827;
+}
+
+.subtitle {
+  margin: 0.4rem 0 0;
+  color: #4b5563;
+}
+
+.gridTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.gridTable th,
+.gridTable td {
+  border: 1px solid #e5e7eb;
+  padding: 0.55rem;
+  vertical-align: top;
+}
+
+.gridTable th {
+  background: #f8fafc;
+  text-align: left;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+  font-size: 0.92rem;
+  font-family: inherit;
+}
+
+.textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.button,
+.secondaryButton,
+.dangerButton,
+.linkButton {
+  border-radius: 8px;
+  padding: 0.42rem 0.72rem;
+  border: 1px solid #9ca3af;
+  font-size: 0.86rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+
+.secondaryButton,
+.linkButton {
+  background: #ffffff;
+  color: #1f2937;
+}
+
+.dangerButton {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.7rem;
+}
+
+.metaText {
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.progressWrap {
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  transition: width 0.2s ease;
+}
+
+.progressLabel {
+  margin-top: 0.35rem;
+  color: #4b5563;
+  font-size: 0.82rem;
+}
