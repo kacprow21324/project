@@ -14,7 +14,7 @@ export default function AuthPage() {
       {isLogin ? <LoginForm /> : <RegisterForm />}
 
       <div>
-        <button onClick={() => setIsLogin(!isLogin)}>
+        <button className="text-gray-600 mt-1" onClick={() => setIsLogin(!isLogin)}>
           {isLogin
             ? 'Nie masz konta? Zarejestruj się'
             : 'Masz konto? Zaloguj się'}

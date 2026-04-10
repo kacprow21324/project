@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { mapCourseRowToAppCourse, roleIdToName, type AppCourse } from '@/lib/appData';
 import styles from './DashboardPanels.module.css';
+import Link from 'next/link';
 
 interface AppUser {
   id: number;
@@ -114,7 +115,7 @@ export const AdminPanel = () => {
       </section>
 
       <section className={styles.card}>
-      <h3>Zarządzanie użytkownikami</h3>
+      <h3 className={styles.bold}>Zarządzanie użytkownikami</h3>
       {users.length === 0 ? (
         <p>Brak użytkowników.</p>
       ) : (
@@ -144,7 +145,7 @@ export const AdminPanel = () => {
       </section>
 
       <section className={styles.card}>
-      <h3>Zarządzanie kursami (moderacja)</h3>
+      <h3 className={styles.bold}>Zarządzanie kursami (moderacja)</h3>
       {courses.length === 0 ? (
         <p>Brak kursów.</p>
       ) : (
@@ -160,7 +161,7 @@ export const AdminPanel = () => {
           <tbody>
             {courses.map((course) => (
               <tr key={course.id}>
-                <td>{course.title}</td>
+                <td className={styles.link}><Link href={`/courses/${course.id}`}>{course.title}</Link></td>
                 <td>{course.category}</td>
                 <td>{course.isOpen ? 'Otwarte' : 'Zamknięte'}</td>
                 <td>
@@ -177,7 +178,7 @@ export const AdminPanel = () => {
       </section>
 
       <section className={styles.card}>
-      <h3>Historia zapisów na kursy</h3>
+      <h3 className={styles.bold}>Historia zapisów na kursy</h3>
       {signups.length === 0 ? (
         <p>Brak zapisów.</p>
       ) : (
@@ -194,7 +195,7 @@ export const AdminPanel = () => {
               <tr key={signup.id}>
                 <td>{new Date(signup.created_at).toLocaleString('pl-PL')}</td>
                 <td>{signup.user_uid}</td>
-                <td>{signup.courses?.title ?? `ID: ${signup.course_id}`}</td>
+                <td className={styles.link}><Link href={`/courses/${signup.course_id}`}>{signup.courses?.title ?? `ID: ${signup.course_id}`}</Link></td>
               </tr>
             ))}
           </tbody>

@@ -174,7 +174,7 @@ export const InstructorCourses = ({ initialCourses, onCoursesUpdate }: Instructo
 			price: 0,
 			category_id: categories[0]?.id ?? null,
 			instructor_uid: session.user.id,
-			isOpen: true,
+			isOpen: false,
 		});
 
 		setLoading(false);
@@ -462,6 +462,7 @@ export const InstructorCourses = ({ initialCourses, onCoursesUpdate }: Instructo
 									>
 										Lekcje i zapisy
 									</button>
+									<Link href={`/courses/${course.id}`}><button className={styles.secondaryButton}>Strona kursu</button></Link>
 									</div>
 								</td>
 							</tr>
@@ -473,7 +474,7 @@ export const InstructorCourses = ({ initialCourses, onCoursesUpdate }: Instructo
 
 			{selectedCourse && (
 				<section className={styles.card}>
-					<h3>Zarządzanie treścią kursu: {selectedCourse.title}</h3>
+					<h3 className={styles.bold}>Zarządzanie treścią kursu: {selectedCourse.title}</h3>
 					<div className={styles.controls}>
 						<button onClick={handleAddLesson} className={styles.secondaryButton}>Dodaj lekcję</button>
 						<Link href={`/courses/${selectedCourse.id}`} className={styles.linkButton}>Zobacz stronę kursu</Link>
@@ -553,7 +554,7 @@ export const InstructorCourses = ({ initialCourses, onCoursesUpdate }: Instructo
 					</div>
 					<button onClick={handleAddSection} className={styles.secondaryButton}>Dodaj sekcję</button>
 
-					<h4>Zapisani użytkownicy</h4>
+					<h4 className={styles.bold}>Zapisani użytkownicy</h4>
 					{signups.length === 0 ? (
 						<p>Brak zapisów na ten kurs.</p>
 					) : (

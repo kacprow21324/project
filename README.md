@@ -49,6 +49,5 @@ Aplikacja jest hostowana na **Vercel**:
 **[Link](https://project-peach-eta.vercel.app/)**
 
 ## Autorzy
-*
-*
-*
+* Kacper Woszczyło 21324
+* Paula Grzebyk 21236

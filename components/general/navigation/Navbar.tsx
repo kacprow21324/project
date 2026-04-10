@@ -89,7 +89,7 @@ export default function Navbar() {
     <header className={classes.headerWrap}>
       <div className={classes.infoBar}>
         <div className={classes.infoInner}>
-          <p className={classes.infoText}>Nowe kursy co tydzien • Nauka online • Certyfikaty ukonczenia</p>
+          <p className={classes.infoText}>Nowe kursy co tydzień • Nauka online • Certyfikaty ukończenia</p>
           <div className={classes.infoLinks}>
             <Link href="/courses" className={classes.infoLink}>Dla firm</Link>
             <Link href="/dashboard" className={classes.infoLink}>Panel kursanta</Link>
@@ -101,15 +101,15 @@ export default function Navbar() {
       <div className={classes.mainBar}>
         <div className={classes.mainInner}>
           <div className={classes.brandBlock}>
-            <Link href="/" className={classes.siteName}>Marketplace Kursow Online</Link>
+            <Link href="/" className={classes.siteName}>Marketplace Kursów Online</Link>
             <p className={classes.siteSub}>Twoja platforma rozwoju kompetencji</p>
           </div>
 
           <nav className={classes.navCenter}>
-            <Link href="/courses" className={classes.navLink}>Katalog kursow</Link>
-            <Link href="/courses" className={classes.navLink}>Sciezki kariery</Link>
+            <Link href="/courses" className={classes.navLink}>Katalog kursów</Link>
+            <Link href="/courses" className={classes.navLink}>Ścieżki kariery</Link>
             <Link href="/dashboard" className={classes.navLink}>Moja nauka</Link>
-            <Link href="/courses" className={classes.navLink}>Dla instruktorow</Link>
+            <Link href="/courses" className={classes.navLink}>Dla instruktorów</Link>
           </nav>
 
           <div className={classes.authArea}>
@@ -125,7 +125,7 @@ export default function Navbar() {
             ) : (
               <>
                 <Link href="/login" className={classes.loginButton}>Zaloguj</Link>
-                <Link href="/register" className={classes.registerButton}>Zaloz konto</Link>
+                <Link href="/register" className={classes.registerButton}>Załóż konto</Link>
               </>
             )}
           </div>

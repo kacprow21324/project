@@ -98,7 +98,7 @@ export default function RegisterForm() {
           <option value="">Wybierz rolę</option>
           <option value="User">Użytkownik</option>
           <option value="Instructor">Instruktor</option>
-          <option value="Admin">Administrator</option>
+          {/*<option value="Admin">Administrator</option>*/}
         </select>
         {errors.role && <span style={{ color: 'red' }}>{errors.role.message}</span>}
       </div>

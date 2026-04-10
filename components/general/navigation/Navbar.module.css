@@ -131,6 +131,10 @@
   color: #d5e2ff;
 }
 
+.dashboardBtn:hover, .loginButton:hover{
+  background: #1b2f57;
+}
+
 .registerButton {
   background: #2b7de9;
   border-color: #2b7de9;
@@ -141,6 +145,10 @@
   background: transparent;
   color: #ffd6d6;
   border-color: #d78f8f;
+}
+
+.logoutButton:hover{
+  background: #552453;
 }
 
 @media (max-width: 1080px) {

@@ -1,0 +1,19 @@
+(Plik tu aby byl widoczny)
+
+To-Do:
+- InstructorCourses
+    - Bug: Mozna wiele razy kliknac "lekcje i zapisy" (rozne kursy)
+    - Css: "Zarządzanie treścią kursu"
+- Dodac wiecej lekcji-sekcji do kursow ?
+    - https://www.lipsum.com/
+- Mobile css ?
+
+Konta do testów:
+admin@admin.pl
+adminadmin
+
+instructor@instructor.pl
+instructor
+
+user@user.pl
+useruser

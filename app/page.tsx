@@ -23,26 +23,26 @@ const careerPaths = [
 ];
 
 const achievements = [
-  'Ania ukonczyla kurs SQL od podstaw i zdobyla certyfikat.',
-  'Krzysztof zakonczyl sciezke Frontend i rozpoczal portfolio.',
-  'Monika ukonczyla kurs analizy danych i awansowala w pracy.',
-  'Pawel zakonczyl kurs AI i wdrozyl automatyzacje w firmie.',
-  'Karolina ukonczyla kurs Excel i oszczedza 5h tygodniowo.',
-  'Mateusz zakonczyl sciezke Marketing i uruchomil kampanie.',
+  'Ania ukończyła kurs SQL od podstaw i zdobyła certyfikat.',
+  'Krzysztof zakończył ścieżkę Frontend i rozpoczął portfolio.',
+  'Monika ukończyła kurs analizy danych i awansowała w pracy.',
+  'Pawel zakończył kurs AI i wdrożył automatyzacje w firmie.',
+  'Karolina ukończyła kurs Excel i oszczędza 5h tygodniowo.',
+  'Mateusz zakończył ścieżkę Marketing i uruchomił kampanię.',
 ];
 
 const testimonials = [
   {
     author: 'Sandra Z.',
-    review: 'Najbardziej podoba mi sie praktyczna struktura lekcji i szybkie przejscie od teorii do cwiczen.',
+    review: 'Najbardziej podoba mi się praktyczna struktura lekcji i szybkie przejście od teorii do ćwiczeń.',
   },
   {
     author: 'Milosz K.',
-    review: 'Po miesiacu nauki mam juz pierwsze zlecenia. Dashboard postepu mocno motywuje.',
+    review: 'Po miesiącu nauki mam już pierwsze zlecenia. Dashboard postępu mocno motywuje.',
   },
   {
     author: 'Katarzyna T.',
-    review: 'Kursy sa konkretne, bez lania wody. Swietne materialy dla osob, ktore chca zmiany zawodowej.',
+    review: 'Kursy są konkretne, bez lania wody. Świetne materiały dla osób, które chcą zmiany zawodowej.',
   },
 ];
 
@@ -117,8 +117,8 @@ export default function Home() {
 
       <section className={styles.section}>
         <div className={styles.sectionTop}>
-          <h2 className={styles.sectionTitle}>Sciezki kariery</h2>
-          <Link href="/courses" className={styles.courseLink}>Zobacz wszystkie sciezki</Link>
+          <h2 className={styles.sectionTitle}>Ścieżki kariery</h2>
+          <Link href="/courses" className={styles.courseLink}>Zobacz wszystkie ściezki</Link>
         </div>
         <div className={styles.pathGrid}>
           {careerPaths.map((path) => (
@@ -126,7 +126,7 @@ export default function Home() {
               <h3>{path.title}</h3>
               <p className={styles.muted}>{path.subtitle}</p>
               <p className={styles.pathMeta}>{path.lessons}</p>
-              <Link href="/courses" className={styles.courseLink}>Rozpocznij sciezke</Link>
+              <Link href="/courses" className={styles.courseLink}>Rozpocznij ścieżkę</Link>
             </article>
           ))}
         </div>
@@ -176,27 +176,27 @@ export default function Home() {
 
       <section className={styles.ctaBand}>
         <div>
-          <h2 className={styles.ctaTitle}>Nie wiesz od czego zaczac nauke?</h2>
-          <p className={styles.ctaText}>Wybierz obszar, ktory chcesz rozwijac, a my poprowadzimy Cie krok po kroku przez kursy i lekcje.</p>
+          <h2 className={styles.ctaTitle}>Nie wiesz od czego zacząć naukę?</h2>
+          <p className={styles.ctaText}>Wybierz obszar, który chcesz rozwijać, a my poprowadzimy Cie krok po kroku przez kursy i lekcje.</p>
         </div>
         <Link href="/courses" className={styles.btnPrimary}>Rozpocznij teraz</Link>
       </section>
 
       <section className={styles.section}>
         <div className={styles.statsHero}>
-          <h2 className={styles.statsTitle}>Dolacz do 372 000 osob, ktore rozwijaja kompetencje online.</h2>
+          <h2 className={styles.statsTitle}>Dołącz do 372 000 osób, które rozwijają kompetencje online.</h2>
           <div className={styles.statsGrid}>
-            <div className={styles.statCard}><strong>19 lat</strong><span>doswiadczenia szkoleniowego</span></div>
-            <div className={styles.statCard}><strong>1200+</strong><span>kursow i sciezek kariery</span></div>
-            <div className={styles.statCard}><strong>94%</strong><span>uzytkownikow poleca platforme</span></div>
+            <div className={styles.statCard}><strong>19 lat</strong><span>doświadczenia szkoleniowego</span></div>
+            <div className={styles.statCard}><strong>1200+</strong><span>kursów i ścieżek kariery</span></div>
+            <div className={styles.statCard}><strong>94%</strong><span>użytkownikow poleca platformę</span></div>
           </div>
         </div>
       </section>
 
       <section className={styles.section}>
         <div className={styles.sectionTop}>
-          <h2 className={styles.sectionTitle}>Najnowsze osiagniecia uczestnikow</h2>
-          <Link href="/courses" className={styles.courseLink}>Baza specjalistow</Link>
+          <h2 className={styles.sectionTitle}>Najnowsze osiągnięcia uczestników</h2>
+          <Link href="/courses" className={styles.courseLink}>Baza specjalistów</Link>
         </div>
         <div className={styles.achievementGrid}>
           {achievements.map((item) => (
@@ -209,7 +209,7 @@ export default function Home() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Opinie naszych uczestnikow</h2>
+        <h2 className={styles.sectionTitle}>Opinie naszych uczestników</h2>
         <div className={styles.testimonialGrid}>
           {testimonials.map((item) => (
             <article key={item.author} className={styles.testimonialCard}>

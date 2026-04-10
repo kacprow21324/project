@@ -254,8 +254,8 @@ export default function LessonDetailsPage() {
 
   return (
     <div>
-      <Link href={`/courses/${course.id}`} className={styles.backLink}>Wróć do kursu</Link>
-      <h1>{course.title}</h1>
+      <Link href={`/courses/${course.id}`} className={styles.backLink}>← Wróć do kursu</Link>
+      <h1 className={styles.courseTitle}>{course.title}</h1>
 
       <div className={styles.page}>
         <aside className={styles.sidebar}>
@@ -297,10 +297,11 @@ export default function LessonDetailsPage() {
             </div>
           </div>
 
-          <h2>
+          <h2 className={styles.bold}>
             Lekcja {activeLesson?.lesson_number}: {activeLesson?.title}
           </h2>
 
+          {userRole === 'User' ? (
           <div className={styles.progressBox}>
             <div className={styles.progressWrap}>
               <div className={styles.progressBar} style={{ width: `${courseProgress.percent}%` }} />
@@ -312,6 +313,7 @@ export default function LessonDetailsPage() {
               {isLessonDone ? 'Oznacz jako nieukończone' : 'Oznacz lekcję jako ukończoną'}
             </button>
           </div>
+          ) : (<span></span>)}
 
           {sections.length === 0 ? (
             <p>Ta lekcja nie ma jeszcze sekcji.</p>
@@ -319,7 +321,7 @@ export default function LessonDetailsPage() {
             <div>
               {sections.map((section) => (
                 <article key={section.id} className={styles.sectionCard}>
-                  <h3>{section.title}</h3>
+                  <h3 className={styles.bold}>{section.title}</h3>
                   <p>{section.text}</p>
                 </article>
               ))}

@@ -36,7 +36,7 @@
 }
 
 .authButton{
-    background-color: var(--main-text-hover);
+    background-color: #303b58;
     padding: 0.7rem;
     color: var(--background-color);
     font-weight: bold;
@@ -47,12 +47,12 @@
 }
 
 .authButton:hover{
-    background-color: var(--navbar-text-hover);
+    background-color: #2b7de9;
     
 }
 
 .h1Title{
     font-size: 2rem;
     font-weight: bold;
-    color: var(--main-text-hover);
+    color: #0f1d40;
 }

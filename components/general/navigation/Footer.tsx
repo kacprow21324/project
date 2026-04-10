@@ -5,26 +5,26 @@ import styles from './Footer.module.css';
 
 const footerColumns = [
   {
-    title: 'Wspolpraca',
+    title: 'Współpraca',
     links: [
-      { label: 'Zostan instruktorem', href: '/register' },
+      { label: 'Zostań instruktorem', href: '/register' },
       { label: 'Program partnerski', href: '/courses' },
-      { label: 'Dla firm i zespolow', href: '/courses' },
+      { label: 'Dla firm i zespołów', href: '/courses' },
     ],
   },
   {
     title: 'Oferta',
     links: [
-      { label: 'Sciezki kariery', href: '/courses' },
+      { label: 'Ścieżki kariery', href: '/courses' },
       { label: 'Egzaminy i certyfikaty', href: '/courses' },
       { label: 'Kursy premium', href: '/courses' },
     ],
   },
   {
-    title: 'Dla uczestnikow',
+    title: 'Dla uczestników',
     links: [
-      { label: 'Program polecen', href: '/dashboard' },
-      { label: 'Opinie kursantow', href: '/courses' },
+      { label: 'Program poleceń', href: '/dashboard' },
+      { label: 'Opinie kursantów', href: '/courses' },
       { label: 'Kontakt i wsparcie', href: '/login' },
     ],
   },
@@ -32,7 +32,7 @@ const footerColumns = [
     title: 'Pomoc',
     links: [
       { label: 'Centrum pomocy', href: '/courses' },
-      { label: 'Polityka prywatnosci', href: '/' },
+      { label: 'Polityka prywatności', href: '/' },
       { label: 'Regulamin platformy', href: '/' },
     ],
   },
@@ -43,7 +43,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <section className={styles.top}>
         <div className={styles.brandBlock}>
-          <p className={styles.brand}>Marketplace Kursow Online</p>
+          <p className={styles.brand}>Marketplace Kursów Online</p>
           <p className={styles.contact}>kontakt@marketplacekursow.pl</p>
           <p className={styles.contact}>+48 500 600 700</p>
         </div>
@@ -65,7 +65,7 @@ export default function Footer() {
           <h4 className={styles.columnTitle}>Newsletter</h4>
           <p className={styles.newsText}>Dostawaj informacje o nowych kursach i promocjach.</p>
           <div className={styles.newsForm}>
-            <input type="email" placeholder="Podaj swoj adres e-mail" className={styles.newsInput} />
+            <input type="email" placeholder="Podaj swój adres e-mail" className={styles.newsInput} />
             <button className={styles.newsButton}>Zapisz</button>
           </div>
           <div className={styles.socials}>
@@ -78,11 +78,11 @@ export default function Footer() {
       </section>
 
       <section className={styles.bottom}>
-        <p className={styles.copy}>© 2026 Marketplace Kursow Online. Wszystkie prawa zastrzezone.</p>
+        <p className={styles.copy}>© 2026 Marketplace Kursów Online. Wszystkie prawa zastrzeżone.</p>
         <div className={styles.bottomLinks}>
           <Link href="/" className={styles.bottomLink}>Ustawienia cookies</Link>
-          <Link href="/" className={styles.bottomLink}>Polityka prywatnosci</Link>
-          <Link href="/" className={styles.bottomLink}>Regulamin zakupow</Link>
+          <Link href="/" className={styles.bottomLink}>Polityka prywatności</Link>
+          <Link href="/" className={styles.bottomLink}>Regulamin zakupów</Link>
         </div>
       </section>
     </footer>

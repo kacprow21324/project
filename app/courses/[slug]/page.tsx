@@ -167,7 +167,7 @@ export default function CourseDetails() {
                 .select('id, rating, comment, created_at, user_uid')
                 .eq('course_id', courseId)
                 .order('created_at', { ascending: false });
-
+            
             if (!isActive) {
                 return;
             }
@@ -176,7 +176,7 @@ export default function CourseDetails() {
                 setReviews(
                     dbResult.data.map((row) => ({
                         id: String(row.id),
-                        author: row.user_uid ? `${String(row.user_uid).slice(0, 8)}...` : 'Użytkownik',
+                        author: `${String('User'+row.user_uid.slice(0,3))}` ? `${String('User '+row.user_uid).slice(0, 8)}...` : 'Użytkownik',
                         rating: Number(row.rating ?? 0),
                         comment: row.comment ?? '',
                         createdAt: row.created_at ?? new Date().toISOString(),
@@ -347,7 +347,7 @@ export default function CourseDetails() {
 
     return (
         <div className={styles.page}>
-            <Link href="/courses" className={styles.backLink}>Wróć do katalogu</Link>
+            <Link href="/courses" className={styles.backLink}>← Wróć do katalogu</Link>
 
             <section className={styles.hero}>
                 <h1 className={styles.title}>{course.title}</h1>
@@ -366,7 +366,7 @@ export default function CourseDetails() {
             </section>
 
             <section className={styles.lessonList}>
-                <h2>Lekcje kursu</h2>
+                <h2 className={styles.bold}>Lekcje kursu</h2>
                 {lessons.length === 0 ? (
                     <p>Ten kurs nie ma jeszcze lekcji.</p>
                 ) : (
@@ -393,7 +393,7 @@ export default function CourseDetails() {
                                         {lessonSections.map((section) => (
                                             <li key={section.id} className={styles.sectionItem}>
                                                 <strong>{section.title}</strong>
-                                                <p>{section.text}</p>
+                                                <p>{section.text.slice(0, 100)+'...'}</p>
                                             </li>
                                         ))}
                                     </ul>
@@ -406,13 +406,13 @@ export default function CourseDetails() {
             </section>
 
             <section className={styles.reviewSection}>
-                <h2>Recenzje kursu</h2>
+                <h2 className={styles.bold}>Recenzje kursu</h2>
                 <p className={styles.reviewMeta}>
                     Średnia ocen: {averageRating} / 5 ({reviews.length} opinii)
                 </p>
-                <p className={styles.reviewMeta}>
+                {/*<p className={styles.reviewMeta}>
                     Źródło opinii: {reviewsSource === 'database' ? 'Baza danych' : 'Tryb lokalny przeglądarki'}
-                </p>
+                </p>*/}
 
                 <div className={styles.reviewForm}>
                     <label>
