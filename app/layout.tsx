@@ -16,11 +16,13 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body>
-        <Navbar/>
+        <div className="appShell">
+          <Navbar />
 
-        <main>{children}</main>
+          <main className="appMain">{children}</main>
 
-        <Footer />
+          <Footer />
+        </div>
       </body>
     </html>
   );

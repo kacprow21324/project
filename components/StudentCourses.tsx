@@ -98,8 +98,9 @@ export const StudentCourses = ({ courses }: StudentCoursesProps) => {
           <p>Nie jesteś zapisany na żaden kurs. Przejdź do sekcji &quot;Przeglądaj&quot; aby znaleźć kursy.</p>
         </section>
       ) : (
-        <section className={styles.card}>
-        <table className={styles.gridTable}>
+        <section className={`${styles.card} ${styles.studentTableCard}`}>
+        <div className={styles.studentTableWrap}>
+        <table className={`${styles.gridTable} ${styles.studentGridTable}`}>
           <thead>
             <tr>
               <th>Tytuł Kursu</th>
@@ -139,6 +140,7 @@ export const StudentCourses = ({ courses }: StudentCoursesProps) => {
             })}
           </tbody>
         </table>
+        </div>
         </section>
       )}
     </div>

@@ -2,18 +2,21 @@
   position: sticky;
   top: 0;
   z-index: 40;
-  box-shadow: 0 6px 20px rgba(7, 16, 38, 0.2);
+  border-bottom: 1px solid #dce4ee;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
 }
 
 .infoBar {
-  background: #0a1329;
-  border-bottom: 1px solid #1f2a47;
+  display: block;
+  border-bottom: 1px solid #e8edf4;
+  background: linear-gradient(140deg, #f8fbff, #ffffff);
 }
 
 .infoInner {
-  max-width: 1400px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0.45rem 1.3rem;
+  padding: 0.5rem 1.35rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,76 +26,112 @@
 
 .infoText {
   margin: 0;
-  color: #cdd8f3;
-  font-size: 0.82rem;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 .infoLinks {
   display: flex;
-  gap: 0.85rem;
+  gap: 0.95rem;
 }
 
 .infoLink {
-  color: #dbe6ff;
+  color: #334155;
   text-decoration: none;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .mainBar {
-  background: #0f1d40;
+  background: #ffffff;
 }
 
 .mainInner {
-  max-width: 1400px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0.8rem 1.3rem;
+  padding: 0.85rem 1.35rem;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(240px, auto) 1fr auto;
   align-items: center;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 .brandBlock {
   display: grid;
-  gap: 0.15rem;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.brandRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.62rem;
+  min-width: 0;
+}
+
+.brandIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff6b35, #f26419);
+  box-shadow: 0 8px 18px rgba(242, 100, 25, 0.28);
+  flex: 0 0 auto;
 }
 
 .siteName {
   text-decoration: none;
-  color: #8aa4ff;
+  color: #111827;
   font-weight: 700;
-  font-size: 1.45rem;
+  font-size: 1.08rem;
+  white-space: nowrap;
 }
 
 .siteSub {
   margin: 0;
-  color: #b9c7eb;
-  font-size: 0.8rem;
+  color: #64748b;
+  font-size: 0.77rem;
 }
 
 .navCenter {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.55rem;
 }
 
 .navLink {
-  color: #e6eeff;
+  color: #334155;
   text-decoration: none;
-  font-size: 0.96rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.35rem 0.72rem;
+  transition: all 0.2s ease;
 }
 
 .navLink:hover,
 .infoLink:hover {
-  color: #7fb6ff;
+  color: #f26419;
+}
+
+.navLink:hover {
+  border-color: #ffd5c5;
+  background: #fff5f1;
 }
 
 .authArea {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
@@ -101,60 +140,62 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  color: #dce7ff;
-  font-size: 0.85rem;
+  color: #334155;
+  font-size: 0.82rem;
 }
 
 .rolePill {
-  border: 1px solid #4f73b8;
-  background: #1b2f57;
-  color: #99bbff;
-  border-radius: 999px;
+  border: 1px solid #ffd3c2;
+  background: #fff5f1;
+  color: #d85724;
+  border-radius: 4px;
   padding: 0.1rem 0.5rem;
 }
 
 .loginButton,
-.registerButton,
 .logoutButton,
 .dashboardBtn {
-  border: 1px solid #5a77ba;
+  border: 1px solid #ffb392;
   border-radius: 8px;
-  padding: 0.35rem 0.65rem;
-  font-size: 0.85rem;
+  padding: 0.42rem 0.72rem;
+  font-size: 0.82rem;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .loginButton,
 .dashboardBtn {
-  background: transparent;
-  color: #d5e2ff;
+  background: #ffffff;
+  color: #1f2937;
 }
 
-.dashboardBtn:hover, .loginButton:hover{
-  background: #1b2f57;
-}
-
-.registerButton {
-  background: #2b7de9;
-  border-color: #2b7de9;
-  color: #ffffff;
+.dashboardBtn:hover,
+.loginButton:hover {
+  background: #fff5f1;
+  border-color: #ff8f61;
 }
 
 .logoutButton {
-  background: transparent;
-  color: #ffd6d6;
-  border-color: #d78f8f;
+  background: #ffffff;
+  color: #b45309;
+  border-color: #facc15;
 }
 
-.logoutButton:hover{
-  background: #552453;
+.logoutButton:hover {
+  background: #fef9c3;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
+  .infoBar {
+    display: none;
+  }
+
   .mainInner {
     grid-template-columns: 1fr;
     justify-items: start;
+    gap: 0.8rem;
   }
 
   .navCenter {
@@ -163,5 +204,20 @@
 
   .authArea {
     justify-content: flex-start;
+  }
+
+  .siteName {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 620px) {
+  .mainInner {
+    padding: 0.72rem 0.9rem;
+  }
+
+  .navLink {
+    font-size: 0.86rem;
+    padding: 0.34rem 0.62rem;
   }
 }

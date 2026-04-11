@@ -65,8 +65,8 @@ export default function Footer() {
           <h4 className={styles.columnTitle}>Newsletter</h4>
           <p className={styles.newsText}>Dostawaj informacje o nowych kursach i promocjach.</p>
           <div className={styles.newsForm}>
-            <input type="email" placeholder="Podaj swój adres e-mail" className={styles.newsInput} />
-            <button className={styles.newsButton}>Zapisz</button>
+            <input type="email" placeholder="Twój email" className={styles.newsInput} />
+            <button className={styles.newsButton}>Zapisz się</button>
           </div>
           <div className={styles.socials}>
             <span className={styles.social}>f</span>

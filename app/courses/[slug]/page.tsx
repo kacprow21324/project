@@ -18,6 +18,10 @@ interface LessonSection {
     course_lessons_id: number;
     title: string;
     text: string;
+    kind?: string | null;
+    file_url?: string | null;
+    file_name?: string | null;
+    mime_type?: string | null;
 }
 
 interface CourseReview {
@@ -26,6 +30,7 @@ interface CourseReview {
     rating: number;
     comment: string;
     createdAt: string;
+    userUid?: string | null;
 }
 
 export default function CourseDetails() {
@@ -91,13 +96,24 @@ export default function CourseDetails() {
 
                 const lessonIds = (lessonsResult.data ?? []).map((lesson) => lesson.id);
                 if (lessonIds.length > 0) {
-                    const { data: sectionData } = await supabase
+                    const sectionResult = await supabase
                         .from('lesson_sections')
-                        .select('id, course_lessons_id, title, text')
+                        .select('id, course_lessons_id, title, text, kind, file_url, file_name, mime_type')
                         .in('course_lessons_id', lessonIds)
                         .order('id', { ascending: true });
-                    if (isActive) {
-                        setSections(sectionData ?? []);
+
+                    if (sectionResult.error) {
+                        const legacySectionResult = await supabase
+                            .from('lesson_sections')
+                            .select('id, course_lessons_id, title, text')
+                            .in('course_lessons_id', lessonIds)
+                            .order('id', { ascending: true });
+
+                        if (isActive) {
+                            setSections((legacySectionResult.data ?? []).map((section) => ({ ...section, kind: 'text' })));
+                        }
+                    } else if (isActive) {
+                        setSections(sectionResult.data ?? []);
                     }
                 } else {
                     setSections([]);
@@ -180,6 +196,7 @@ export default function CourseDetails() {
                         rating: Number(row.rating ?? 0),
                         comment: row.comment ?? '',
                         createdAt: row.created_at ?? new Date().toISOString(),
+                        userUid: row.user_uid ?? null,
                     }))
                 );
                 setReviewsSource('database');
@@ -220,6 +237,11 @@ export default function CourseDetails() {
             return;
         }
 
+        if (userRole !== 'User') {
+            alert('Tylko uczestnik z rolą User może dodawać recenzje kursu.');
+            return;
+        }
+
         if (userRole === 'User' && !isEnrolled) {
             alert('Aby dodać recenzję, musisz być zapisany na kurs.');
             return;
@@ -237,6 +259,7 @@ export default function CourseDetails() {
             rating: reviewRating,
             comment,
             createdAt: new Date().toISOString(),
+            userUid: viewerId,
         };
 
         const saveReview = async () => {
@@ -266,6 +289,7 @@ export default function CourseDetails() {
                     rating: Number(dbInsert.data.rating ?? 0),
                     comment: dbInsert.data.comment ?? '',
                     createdAt: dbInsert.data.created_at ?? new Date().toISOString(),
+                    userUid: dbInsert.data.user_uid ?? viewerId,
                 };
 
                 setReviews((prev) => [savedReview, ...prev]);
@@ -282,6 +306,52 @@ export default function CourseDetails() {
         };
 
         saveReview();
+    };
+
+    const handleDeleteReview = async (reviewId: string) => {
+        if (userRole !== 'Admin') {
+            return;
+        }
+
+        if (!confirm('Usunąć komentarz użytkownika?')) {
+            return;
+        }
+
+        if (reviewsSource === 'database') {
+            const numericId = Number(reviewId);
+            const normalizedId = Number.isFinite(numericId) ? numericId : reviewId;
+
+            const rpcDelete = await supabase.rpc('admin_delete_review', {
+                target_review_id: Number(normalizedId),
+            });
+
+            const { error: directDeleteError } = rpcDelete.error
+                ? await supabase
+                    .from('course_reviews')
+                    .delete()
+                    .eq('id', normalizedId)
+                : { error: null as { message?: string } | null };
+
+            const deleteError = rpcDelete.error && directDeleteError
+                ? directDeleteError
+                : null;
+
+            if (deleteError) {
+                const message = rpcDelete.error?.message || deleteError.message || '';
+                const isPermissionError = message.toLowerCase().includes('permission') || message.toLowerCase().includes('policy');
+                alert(isPermissionError
+                    ? `Brak uprawnień bazy danych do usuwania komentarza: ${message}`
+                    : `Nie udało się usunąć komentarza: ${message}`);
+                return;
+            }
+        }
+
+        const nextReviews = reviews.filter((review) => review.id !== reviewId);
+        setReviews(nextReviews);
+
+        if (reviewsSource === 'local') {
+            localStorage.setItem(`course_reviews_${courseId}`, JSON.stringify(nextReviews));
+        }
     };
 
     const handleEnroll = async () => {
@@ -331,6 +401,9 @@ export default function CourseDetails() {
         reviews.length === 0
             ? 0
             : Math.round((reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length) * 10) / 10;
+    const canAddReview = userRole === 'User' && isEnrolled;
+    const canModerateReviews = userRole === 'Admin';
+    const canBrowseLessons = userRole !== 'User' || isEnrolled;
 
     if (loading) {
         return <div>Ładowanie szczegółów kursu...</div>;
@@ -367,7 +440,9 @@ export default function CourseDetails() {
 
             <section className={styles.lessonList}>
                 <h2 className={styles.bold}>Lekcje kursu</h2>
-                {lessons.length === 0 ? (
+                {!canBrowseLessons ? (
+                    <p>Aby przeglądać lekcje, najpierw zapisz się na kurs.</p>
+                ) : lessons.length === 0 ? (
                     <p>Ten kurs nie ma jeszcze lekcji.</p>
                 ) : (
                     <ol>
@@ -393,7 +468,13 @@ export default function CourseDetails() {
                                         {lessonSections.map((section) => (
                                             <li key={section.id} className={styles.sectionItem}>
                                                 <strong>{section.title}</strong>
-                                                <p>{section.text.slice(0, 100)+'...'}</p>
+                                                {section.kind === 'text' || !section.kind ? (
+                                                    <p>{section.text.slice(0, 100) + '...'}</p>
+                                                ) : section.kind === 'video' ? (
+                                                    <p>Wideo: {section.file_name ?? 'material wideo'}</p>
+                                                ) : (
+                                                    <p>Plik: {section.file_name ?? 'material'}</p>
+                                                )}
                                             </li>
                                         ))}
                                     </ul>
@@ -414,32 +495,36 @@ export default function CourseDetails() {
                     Źródło opinii: {reviewsSource === 'database' ? 'Baza danych' : 'Tryb lokalny przeglądarki'}
                 </p>*/}
 
-                <div className={styles.reviewForm}>
-                    <label>
-                        Ocena
-                        <select
-                            value={reviewRating}
-                            onChange={(event) => setReviewRating(Number(event.target.value))}
-                            className={styles.reviewInput}
-                        >
-                            <option value={5}>5</option>
-                            <option value={4}>4</option>
-                            <option value={3}>3</option>
-                            <option value={2}>2</option>
-                            <option value={1}>1</option>
-                        </select>
-                    </label>
-                    <label>
-                        Twoja opinia
-                        <textarea
-                            value={reviewComment}
-                            onChange={(event) => setReviewComment(event.target.value)}
-                            className={styles.reviewTextarea}
-                            placeholder="Napisz co podobało Ci się w kursie i co warto poprawić"
-                        />
-                    </label>
-                    <button onClick={handleAddReview} className={styles.primaryBtn}>Dodaj recenzję</button>
-                </div>
+                {canAddReview ? (
+                    <div className={styles.reviewForm}>
+                        <label>
+                            Ocena
+                            <select
+                                value={reviewRating}
+                                onChange={(event) => setReviewRating(Number(event.target.value))}
+                                className={styles.reviewInput}
+                            >
+                                <option value={5}>5</option>
+                                <option value={4}>4</option>
+                                <option value={3}>3</option>
+                                <option value={2}>2</option>
+                                <option value={1}>1</option>
+                            </select>
+                        </label>
+                        <label>
+                            Twoja opinia
+                            <textarea
+                                value={reviewComment}
+                                onChange={(event) => setReviewComment(event.target.value)}
+                                className={styles.reviewTextarea}
+                                placeholder="Napisz co podobało Ci się w kursie i co warto poprawić"
+                            />
+                        </label>
+                        <button onClick={handleAddReview} className={styles.primaryBtn}>Dodaj recenzję</button>
+                    </div>
+                ) : (
+                    <p className={styles.reviewMeta}>Dodawanie recenzji jest dostępne tylko dla zapisanych uczestników (rola User).</p>
+                )}
 
                 {reviews.length === 0 ? (
                     <p>Brak recenzji. Bądź pierwszą osobą, która oceni kurs.</p>
@@ -447,7 +532,18 @@ export default function CourseDetails() {
                     <ul className={styles.reviewList}>
                         {reviews.map((review) => (
                             <li key={review.id} className={styles.reviewItem}>
-                                <strong>{review.author}</strong>
+                                <div className={styles.reviewHeader}>
+                                    <strong>{review.author}</strong>
+                                    {canModerateReviews ? (
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDeleteReview(review.id)}
+                                            className={styles.deleteReviewButton}
+                                        >
+                                            Usuń komentarz
+                                        </button>
+                                    ) : null}
+                                </div>
                                 <p className={styles.reviewMeta}>
                                     Ocena: {review.rating}/5 • {new Date(review.createdAt).toLocaleDateString('pl-PL')}
                                 </p>

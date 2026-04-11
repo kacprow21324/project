@@ -1,8 +1,8 @@
 .footer {
-  margin-top: 2rem;
-  background: #303b58;
-  color: #d7deef;
-  border-top: 1px solid #3c4764;
+  margin-top: auto;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  color: #333333;
+  border-top: 1px solid var(--ui-border);
 }
 
 .top {
@@ -23,18 +23,18 @@
 .brand {
   margin: 0;
   font-weight: 700;
-  color: #f2f6ff;
+  color: #1f2937;
 }
 
 .contact {
   margin: 0;
-  color: #bdc8e2;
+  color: #4b5563;
   font-size: 0.9rem;
 }
 
 .columnTitle {
   margin: 0 0 0.7rem;
-  color: #f4f7ff;
+  color: #1f2937;
   font-size: 0.95rem;
 }
 
@@ -47,18 +47,18 @@
 }
 
 .link {
-  color: #c6d3f0;
+  color: #4b5563;
   text-decoration: none;
   font-size: 0.9rem;
 }
 
 .link:hover {
-  color: #ffffff;
+  color: var(--ui-accent);
 }
 
 .newsText {
   margin: 0;
-  color: #bcc8e2;
+  color: #4b5563;
   font-size: 0.9rem;
   line-height: 1.35;
 }
@@ -71,20 +71,25 @@
 }
 
 .newsInput {
-  border: 1px solid #6f7ea5;
-  background: #394663;
-  color: #edf2ff;
-  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 4px;
   padding: 0.55rem 0.65rem;
 }
 
+.newsInput::placeholder {
+  color: #6b7280;
+}
+
 .newsButton {
-  border: 1px solid #7aa2ff;
-  background: #1a7be0;
+  border: 1px solid var(--ui-accent);
+  background: var(--ui-accent);
   color: #ffffff;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.52rem 0.75rem;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .socials {
@@ -96,9 +101,10 @@
 .social {
   min-width: 34px;
   height: 34px;
-  border-radius: 999px;
-  background: #1a7be0;
-  color: #ffffff;
+  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #374151;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -109,7 +115,7 @@
 .bottom {
   max-width: 1400px;
   margin: 0 auto;
-  border-top: 1px solid #566482;
+  border-top: 1px solid var(--ui-border);
   padding: 0.9rem 1.5rem 1.3rem;
   display: flex;
   justify-content: space-between;
@@ -120,7 +126,7 @@
 
 .copy {
   margin: 0;
-  color: #becae4;
+  color: #4b5563;
   font-size: 0.86rem;
 }
 
@@ -131,13 +137,13 @@
 }
 
 .bottomLink {
-  color: #c6d3f0;
+  color: #4b5563;
   text-decoration: none;
   font-size: 0.85rem;
 }
 
 .bottomLink:hover {
-  color: #ffffff;
+  color: var(--ui-accent);
 }
 
 @media (max-width: 1200px) {

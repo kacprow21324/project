@@ -36,15 +36,36 @@ export default function RegisterForm() {
         return;
       }
 
-      const { error: userError } = await supabase
-        .from('users')
-        .insert({
-          UID: authData.user?.id,
-          role_id: roleNameToId(data.role),
-        });
+      const userBaseRow = {
+        UID: authData.user?.id,
+        role_id: roleNameToId(data.role),
+      };
 
-      if (userError) {
-        setServerError(userError.message);
+      const insertVariants = [
+        { ...userBaseRow, username: data.username },
+        { ...userBaseRow, name: data.username },
+        { ...userBaseRow, nick: data.username },
+        userBaseRow,
+      ];
+
+      let userInsertSucceeded = false;
+      let userInsertErrorMessage = 'Nie udało się utworzyć rekordu użytkownika.';
+
+      for (const variant of insertVariants) {
+        const { error: userError } = await supabase
+          .from('users')
+          .insert(variant);
+
+        if (!userError) {
+          userInsertSucceeded = true;
+          break;
+        }
+
+        userInsertErrorMessage = userError.message;
+      }
+
+      if (!userInsertSucceeded) {
+        setServerError(userInsertErrorMessage);
         setLoading(false);
         return;
       }
@@ -94,7 +115,7 @@ export default function RegisterForm() {
 
       <div className={classes.inputSection}>
         <label htmlFor="role">Rola:</label>
-        <select id="role" {...register('role', { required: 'Rola jest wymagana' })}>
+        <select className={classes.inputBox} id="role" {...register('role', { required: 'Rola jest wymagana' })}>
           <option value="">Wybierz rolę</option>
           <option value="User">Użytkownik</option>
           <option value="Instructor">Instruktor</option>

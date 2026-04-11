@@ -9,6 +9,10 @@
 
 Aplikacja typu marketplace dedykowana do zarządzania, publikowania oraz uczestnictwa w kursach online. System opiera się na dostępie opartym o role (RBAC), oferując dedykowane funkcjonalności dla kursantów, twórców oraz administracji.
 
+## Podgląd aplikacji
+
+![Zrzut ekranu aplikacji](dokumentacja/1.png)
+
 ## Uwierzytelnianie
 
 Aplikacja zawiera kompletny moduł autoryzacji z płynną nawigacją między widokami:
@@ -43,10 +47,16 @@ Rola nadzorująca działanie całej platformy.
 * Zarządzanie kursami oraz moderacja publikowanych treści.
 * Dostęp do pełnej historii zapisów i statystyk w systemie.
 
+## Schemat bazy danych
+
+Poniżej znajduje się architektura bazy danych wykorzystywana w projekcie:
+
+![Schemat bazy danych](dokumentacja/2.png)
+
 ## Hosting
 
 Aplikacja jest hostowana na **Vercel**:
-**[Link](https://project-peach-eta.vercel.app/)**
+**[Link do działającej aplikacji](https://project-peach-eta.vercel.app/)**
 
 ## Autorzy
 * Kacper Woszczyło 21324

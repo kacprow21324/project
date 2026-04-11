@@ -18,6 +18,10 @@ interface LessonSection {
   course_lessons_id: number;
   title: string;
   text: string;
+  kind?: string | null;
+  file_url?: string | null;
+  file_name?: string | null;
+  mime_type?: string | null;
 }
 
 interface CourseInfo {
@@ -87,7 +91,7 @@ export default function LessonDetailsPage() {
 
         const sectionResult = await supabase
           .from('lesson_sections')
-          .select('id, course_lessons_id, title, text')
+          .select('id, course_lessons_id, title, text, kind, file_url, file_name, mime_type')
           .eq('course_lessons_id', lessonId)
           .order('id', { ascending: true });
 
@@ -95,7 +99,18 @@ export default function LessonDetailsPage() {
 
         setCourse({ id: courseResult.data.id, title: courseResult.data.title });
         setLessons(loadedLessons);
-        setSections(sectionResult.data ?? []);
+
+        if (sectionResult.error) {
+          const legacySectionResult = await supabase
+            .from('lesson_sections')
+            .select('id, course_lessons_id, title, text')
+            .eq('course_lessons_id', lessonId)
+            .order('id', { ascending: true });
+
+          setSections((legacySectionResult.data ?? []).map((section) => ({ ...section, kind: 'text' })));
+        } else {
+          setSections(sectionResult.data ?? []);
+        }
 
         const sessionUser = sessionResult.data.session?.user;
         if (!sessionUser) {
@@ -103,6 +118,7 @@ export default function LessonDetailsPage() {
           setIsEnrolled(false);
           setIsLessonDone(false);
           setCourseProgress({ done: 0, total: loadedLessons.length, percent: 0 });
+          setError('Aby przeglądać lekcje, musisz być zapisany na kurs.');
           return;
         }
 
@@ -128,6 +144,11 @@ export default function LessonDetailsPage() {
         setUserRole(role);
         const enrolled = role === 'Instructor' || role === 'Admin' || Boolean(signupResult.data);
         setIsEnrolled(enrolled);
+
+        if (role === 'User' && !enrolled) {
+          setError('Aby przeglądać lekcje, musisz być zapisany na kurs.');
+          return;
+        }
 
         const lessonIds = loadedLessons.map((lesson) => lesson.id);
         const progressResult =
@@ -322,7 +343,21 @@ export default function LessonDetailsPage() {
               {sections.map((section) => (
                 <article key={section.id} className={styles.sectionCard}>
                   <h3 className={styles.bold}>{section.title}</h3>
-                  <p>{section.text}</p>
+                  {section.kind === 'text' || !section.kind ? (
+                    <p>{section.text}</p>
+                  ) : section.kind === 'video' ? (
+                    section.file_url ? (
+                      <video controls src={section.file_url} style={{ width: '100%' }} />
+                    ) : (
+                      <p>Brak linku do wideo.</p>
+                    )
+                  ) : section.file_url ? (
+                    <a href={section.file_url} target="_blank" rel="noreferrer">
+                      Pobierz plik: {section.file_name ?? 'material'}
+                    </a>
+                  ) : (
+                    <p>Brak linku do pliku.</p>
+                  )}
                 </article>
               ))}
             </div>

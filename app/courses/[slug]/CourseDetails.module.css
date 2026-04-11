@@ -4,15 +4,15 @@
 }
 
 .hero {
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-card);
   padding: 1rem;
 }
 
 .title {
   margin: 0;
-  color: #111827;
+  color: var(--ui-text);
   font-weight: bold;
 }
 
@@ -24,25 +24,26 @@
 }
 
 .badge {
-  background: #f1f5f9;
-  color: #1f2937;
-  border: 1px solid #cbd5e1;
-  border-radius: 999px;
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
   padding: 0.2rem 0.7rem;
   font-size: 0.8rem;
 }
 
 .description {
   margin-top: 0.8rem;
-  color: #4b5563;
+  color: #333333;
 }
 
 .primaryBtn {
   margin-top: 0.8rem;
-  border-radius: 8px;
-  border: 1px solid #1d4ed8;
-  background: #1d4ed8;
+  border-radius: 4px;
+  border: 1px solid var(--ui-accent);
+  background: var(--ui-accent);
   color: #ffffff;
+  font-weight: 700;
   padding: 0.5rem 0.8rem;
   cursor: pointer;
 }
@@ -50,24 +51,25 @@
 .enrolledInfo {
   margin-top: 0.8rem;
   display: inline-block;
-  border: 1px solid #86efac;
-  background: #f0fdf4;
-  color: #166534;
-  border-radius: 999px;
+  border: 1px solid #a7f3d0;
+  background: #ecfdf5;
+  color: #065f46;
+  border-radius: 4px;
   padding: 0.3rem 0.7rem;
   font-size: 0.85rem;
 }
 
 .lessonList {
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-card);
   padding: 1rem;
 }
 
 .lessonItem {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-card);
+  background: #ffffff;
   padding: 0.75rem;
   margin-bottom: 0.75rem;
 }
@@ -75,14 +77,14 @@
 .lessonTitle {
   margin: 0;
   font-size: 1rem;
-  color: #111827;
+  color: var(--ui-text);
   font-weight: bold;
 }
 
 .lessonLink {
   display: inline-block;
   margin-top: 0.35rem;
-  color: #1d4ed8;
+  color: var(--ui-accent);
   text-decoration: none;
 }
 
@@ -92,18 +94,18 @@
 
 .sectionItem {
   margin-bottom: 0.5rem;
-  color: #374151;
+  color: #333333;
 }
 
 .backLink {
-  color: #1d4ed8;
+  color: var(--ui-accent);
   text-decoration: none;
 }
 
 .reviewSection {
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-card);
   padding: 1rem;
 }
 
@@ -121,8 +123,10 @@
 .reviewInput,
 .reviewTextarea {
   width: 100%;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #333333;
   padding: 0.5rem 0.6rem;
   font-size: 0.94rem;
 }
@@ -141,9 +145,32 @@
 }
 
 .reviewItem {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-card);
+  background: #ffffff;
   padding: 0.7rem;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.deleteReviewButton {
+  border: 1px solid #fda4af;
+  background: #fff1f2;
+  color: #9f1239;
+  border-radius: 6px;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.deleteReviewButton:hover {
+  background: #ffe4e6;
 }
 
 .bold{

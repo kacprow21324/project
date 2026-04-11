@@ -242,14 +242,14 @@ export default function Courses() {
                   <div className={styles.meta}>
                     <span className={styles.badge}>{course.level || 'Poziom nieokreślony'}</span>
                     <span className={styles.badge}>{course.category}</span>
-                    <span className={styles.badge}>{course.price} PLN</span>
+                    <span className={`${styles.badge} ${styles.priceBadge}`}>{course.price} PLN</span>
                   </div>
                   <p className={styles.description}>{course.description || 'Brak opisu kursu.'}</p>
                   <div className={styles.actions}>
                     <Link href={`/courses/${course.id}`} className={styles.secondaryBtn}>Zobacz szczegóły</Link>
                     {userRole === 'User' ? (
                       enrolledCourseIds.includes(course.id) ? (
-                        <span className={styles.badge}>Jesteś zapisany</span>
+                        <span className={`${styles.badge} ${styles.enrolledBadge}`}>Jesteś zapisany</span>
                       ) : (
                         <button onClick={() => handleEnroll(course.id)} className={styles.primaryBtn}>
                           Zapisz się

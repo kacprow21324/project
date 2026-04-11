@@ -4,12 +4,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background-color: var(--background-color-2);
-    border-radius: 0.5rem;
-    max-width: 50%;
-    color: var(--main-text-color);
+    background: var(--ui-surface);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-card);
+    max-width: 720px;
+    width: 100%;
+    color: var(--ui-text);
     margin-top: 1rem;
-    min-width: 40%;
 }
 
 .inputSection{
@@ -20,8 +21,9 @@
 }
 
 .inputSection label{
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 0.3rem;
+    color: var(--ui-text);
 }
 
 .authForm{
@@ -29,30 +31,44 @@
 }
 
 .inputBox{
-    border: 2px solid #ccc;
-    border-radius: 0.3rem;
+    border: 1px solid var(--ui-border);
+    border-radius: 4px;
+    background: #ffffff;
+    color: #1f2937;
     min-width: 100%;
     height: 2.5rem;
+    padding: 0 0.65rem;
+}
+
+.inputBox::placeholder {
+    color: #94a3b8;
+}
+
+.inputBox:focus {
+    outline: 2px solid rgba(242, 100, 25, 0.35);
+    outline-offset: 1px;
+    border-color: var(--ui-accent);
 }
 
 .authButton{
-    background-color: #303b58;
+    background: var(--ui-accent);
+    border: 1px solid var(--ui-accent);
     padding: 0.7rem;
-    color: var(--background-color);
-    font-weight: bold;
-    border-radius: 0.5rem;
+    color: #20140c;
+    font-weight: 700;
+    border-radius: 4px;
     margin-top: 1rem;
     min-width: 100%;
     cursor: pointer;
 }
 
 .authButton:hover{
-    background-color: #2b7de9;
-    
+    background: #cc8b4e;
+    border-color: #cc8b4e;
 }
 
 .h1Title{
     font-size: 2rem;
-    font-weight: bold;
-    color: #0f1d40;
+    font-weight: 700;
+    color: var(--ui-text);
 }

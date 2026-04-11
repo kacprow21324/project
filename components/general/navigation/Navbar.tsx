@@ -101,7 +101,10 @@ export default function Navbar() {
       <div className={classes.mainBar}>
         <div className={classes.mainInner}>
           <div className={classes.brandBlock}>
-            <Link href="/" className={classes.siteName}>Marketplace Kursów Online</Link>
+            <div className={classes.brandRow}>
+              <span className={classes.brandIcon} aria-hidden="true">M</span>
+              <Link href="/" className={classes.siteName}>Marketplace Kursów Online</Link>
+            </div>
             <p className={classes.siteSub}>Twoja platforma rozwoju kompetencji</p>
           </div>
 
@@ -109,7 +112,6 @@ export default function Navbar() {
             <Link href="/courses" className={classes.navLink}>Katalog kursów</Link>
             <Link href="/courses" className={classes.navLink}>Ścieżki kariery</Link>
             <Link href="/dashboard" className={classes.navLink}>Moja nauka</Link>
-            <Link href="/courses" className={classes.navLink}>Dla instruktorów</Link>
           </nav>
 
           <div className={classes.authArea}>
@@ -125,7 +127,6 @@ export default function Navbar() {
             ) : (
               <>
                 <Link href="/login" className={classes.loginButton}>Zaloguj</Link>
-                <Link href="/register" className={classes.registerButton}>Załóż konto</Link>
               </>
             )}
           </div>

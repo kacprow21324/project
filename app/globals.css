@@ -1,81 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-html{
+:root {
+    --ui-primary: #ffffff;
+    --ui-primary-strong: #f8f9fa;
+    --ui-bg: #f8f9fa;
+    --ui-surface: #ffffff;
+    --ui-surface-2: #f1f3f5;
+    --ui-text: #212529;
+    --ui-text-soft: #495057;
+    --ui-accent: #FF6B35;
+    --ui-teal: #9FD4FF;
+    --ui-border: #dee2e6;
+    --ui-border-accent: #FF6B35;
+    --ui-danger: #d36a6a;
+    --ui-radius-card: 10px;
+    --ui-radius-btn: 4px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
     min-height: 100%;
 }
 
-:root{
-    --background-color: #eee;
-    --background-color-2: #fff;
-
-    --navbar-color: oklch(20.8% 0.042 265.755);
-    --navbar-text: #fff;
-    --navbar-text-hover: oklch(67.3% 0.182 276.935);
-
-    --main-font: 'arial';
-    --main-text-color: oklch(20.8% 0.042 265.755);
-    --main-text-hover: oklch(37.2% 0.044 257.287)
+body {
+    background:
+        radial-gradient(circle at 12% 18%, rgba(255, 107, 53, 0.08), transparent 35%),
+        radial-gradient(circle at 84% 21%, rgba(159, 212, 255, 0.13), transparent 42%),
+        radial-gradient(circle at 52% 92%, rgba(11, 19, 43, 0.04), transparent 45%),
+        linear-gradient(160deg, #ffffff, #f8f9fa 72%);
+    color: var(--ui-text);
+    font-family: 'Space Grotesk', 'Trebuchet MS', sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
 }
 
-body{
-    margin: 0 0 0;
-    background-color: var(--background-color);
+.appShell {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
-main{
-    margin: 2rem;
+.appMain {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    padding: 0 clamp(14px, 3vw, 28px);
     flex: 1;
 }
 
-.welcomeCard{
+a {
+    color: var(--ui-accent);
+}
+
+.welcomeCard {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background-color: var(--background-color-2);
-    border-radius: 0.5rem;
-    max-width: 50%;
-    color: var(--main-text-color);
+    background: var(--ui-surface);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-card);
+    color: var(--ui-text);
 }
 
-.welcomeCardBG{
-    background-image: url('/assets/mainpage.jpg');
+.welcomeCardBG {
+    background-image: linear-gradient(140deg, rgba(11, 19, 43, 0.85), rgba(28, 37, 65, 0.85)), url('/assets/mainpage.jpg');
     background-size: cover;
     background-position: center;
     width: 100%;
-    min-height: 400px;
+    min-height: 380px;
     display: flex;
     align-items: center;
     padding: 2rem;
     margin: 0;
-    border-radius: 1rem;
+    border-radius: var(--ui-radius-card);
+    border: 1px solid var(--ui-border-accent);
 }
 
-.h1Title{
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--main-text-hover);
+.h1Title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--ui-text);
 }
 
-.footer{
+.footer {
     text-align: center;
-    color: var(--main-text-hover);
+    color: var(--ui-text);
     width: 100%;
     padding: 1rem;
     margin-top: auto;
-    background-color: var(--background-color);
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--ui-border);
 }
 
-/* Legacy footer class retained for backwards compatibility with older pages. */
 .footer:empty {
     display: none;
 }
 
-.pageContainer{
+.pageContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.7rem;
 }
